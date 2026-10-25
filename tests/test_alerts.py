@@ -103,6 +103,51 @@ class TestChangeDetection(unittest.TestCase):
             self.assertEqual(out.changes[0].kind, "confidence")
             self.assertEqual(len(sent), 1)
 
+
+    def test_scheduled_digest_emails_on_baseline_and_no_change_runs(self):
+        sent = []
+        with tempfile.TemporaryDirectory() as tmp:
+            out_dir = Path(tmp)
+            first = process_alerts(
+                self.result, out_dir, config=CONFIG,
+                sender=lambda *args: sent.append(args), always_send=True,
+            )
+            self.assertEqual(first.status, "sent")
+            self.assertEqual(len(sent), 1)
+            self.assertIn("2-hour market update", sent[0][1])
+            self.assertIn("CURRENT BOOK", sent[0][2])
+
+            before = (out_dir / "alert_state.json").read_text(encoding="utf-8")
+            second = process_alerts(
+                self.result, out_dir, config=CONFIG,
+                sender=lambda *args: sent.append(args), always_send=True,
+            )
+            self.assertEqual(second.status, "sent")
+            self.assertEqual(len(sent), 2)
+            self.assertEqual(sent[1][1], "[Commodity Signal] 2-hour market update")
+            self.assertIn("No material signal changes", sent[1][2])
+            self.assertEqual(
+                json.loads(before)["assets"]["gold"]["confidence"],
+                json.loads((out_dir / "alert_state.json").read_text(encoding="utf-8"))["assets"]["gold"]["confidence"],
+            )
+
+    def test_scheduled_digest_includes_material_changes(self):
+        sent = []
+        with tempfile.TemporaryDirectory() as tmp:
+            process_alerts(
+                self.result, Path(tmp), config=CONFIG,
+                sender=lambda *args: sent.append(args), always_send=True,
+            )
+            changed = replace(self.signal, action="HOLD", score=8.0)
+            result = process_alerts(
+                result_for(changed), Path(tmp), config=CONFIG,
+                sender=lambda *args: sent.append(args), always_send=True,
+            )
+            self.assertEqual(result.status, "sent")
+            self.assertEqual(len(sent), 2)
+            self.assertIn("1 material change", sent[1][1])
+            self.assertIn("Gold: BUY -> HOLD", sent[1][2])
+
     def test_stop_crossing_detected(self):
         with tempfile.TemporaryDirectory() as tmp:
             process_alerts(self.result, Path(tmp), config=CONFIG, sender=lambda *a: None)
