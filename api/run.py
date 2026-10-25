@@ -1,13 +1,12 @@
-"""Vercel cron endpoint for the Commodity Signal Desk.
+"""Serverless dashboard and scheduled API for the Commodity Signal Desk.
 
-This is email-only: it runs the pipeline, compares the result with the last
-alerted baseline stored in Upstash Redis, and sends the same change email as the
-local watcher.
+The root path serves the dashboard. The protected /api/run endpoint runs market/news
+analysis and either sends change-only alerts or a scheduled two-hour digest.
 
 Vercel functions have a read-only filesystem and are ephemeral, so:
   * market/news cache and the local state mirror live under /tmp
   * the authoritative alert state lives in Upstash Redis over HTTPS
-  * no HTML report is written or hosted
+  * the dashboard HTML is served from source; no generated report is persisted
 
 Environment variables:
   CRON_SECRET                 required; Vercel Cron/external scheduler sends it
