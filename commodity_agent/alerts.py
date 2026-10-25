@@ -290,11 +290,20 @@ def _action_color(action: str) -> str:
 
 
 def build_message(
-    result: RunResult, changes: list[Change], out_dir: Path
+    result: RunResult,
+    changes: list[Change],
+    out_dir: Path,
+    *,
+    digest: bool = False,
 ) -> tuple[str, str, str]:
     stamp = f"{result.generated_at:%d %b %Y %H:%M %Z}"
 
-    if len(changes) == 1:
+    if digest:
+        subject = (
+            f"[Commodity Signal] 2-hour market update — {len(changes)} material change(s)"
+            if changes else "[Commodity Signal] 2-hour market update"
+        )
+    elif len(changes) == 1:
         subject = f"[Commodity Signal] {changes[0].headline}"
     else:
         names = ", ".join(dict.fromkeys(c.asset_name for c in changes))
@@ -302,11 +311,14 @@ def build_message(
     subject = subject.replace("\n", " ").replace("\r", " ")[:150]
 
     text_lines = [
-        "Commodity Signal Desk - signal changes",
+        "Commodity Signal Desk - 2-hour market update" if digest
+        else "Commodity Signal Desk - signal changes",
         stamp,
         "",
-        "CHANGES",
+        "CHANGES" if changes else "MATERIAL CHANGES",
     ]
+    if not changes and digest:
+        text_lines.append("No material signal changes since the previous alerted baseline.")
     for change in changes:
         text_lines.append(f"* {change.headline}")
         text_lines.append(f"  {change.detail}")
@@ -362,16 +374,32 @@ def build_message(
         else ""
     )
 
+    email_title = "2-hour market update" if digest else "Signal change"
+    if change_html:
+        change_section = (
+            '<ul style="list-style:none;margin:0 0 20px 0;padding:0;">'
+            + "".join(change_html)
+            + "</ul>"
+        )
+    elif digest:
+        change_section = (
+            '<p style="margin:0 0 20px;color:#4b5563;">'
+            "No material signal changes since the previous alerted baseline."
+            "</p>"
+        )
+    else:
+        change_section = ""
+
     html_body = f"""<!doctype html>
 <html><body style="margin:0;padding:0;background:#f3f4f6;font-family:Segoe UI,Arial,sans-serif;color:#111827;">
 <div style="max-width:680px;margin:0 auto;padding:24px 16px;">
   <div style="background:#0b1018;color:#f9fafb;padding:18px 20px;border-radius:10px 10px 0 0;">
     <div style="font-size:11px;letter-spacing:1.4px;color:#e8b44a;">COMMODITY SIGNAL DESK</div>
-    <h1 style="margin:4px 0 0;font-size:21px;">Signal change</h1>
+    <h1 style="margin:4px 0 0;font-size:21px;">{html_lib.escape(email_title)}</h1>
     <div style="margin-top:6px;color:#9ca3af;font-size:12px;">{html_lib.escape(stamp)}</div>
   </div>
   <div style="background:#ffffff;padding:20px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px;">
-    <ul style="list-style:none;margin:0 0 20px 0;padding:0;">{''.join(change_html)}</ul>
+    {change_section}
     <h2 style="font-size:13px;letter-spacing:.9px;text-transform:uppercase;color:#6b7280;margin:0 0 8px;">Current book</h2>
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead><tr>
@@ -508,6 +536,7 @@ def process_alerts(
     *,
     config: AlertConfig,
     sender=send_email,
+    always_send: bool = False,
 ) -> AlertOutcome:
     out_dir = Path(out_dir)
     state_file = out_dir / STATE_NAME
@@ -516,6 +545,14 @@ def process_alerts(
 
     if not previous_assets:
         save_state(state_file, result)
+        if always_send:
+            subject, text_body, html_body = build_message(
+                result, [], out_dir, digest=True
+            )
+            sender(config, subject, text_body, html_body)
+            return AlertOutcome(
+                "sent", [], f"Sent scheduled market update to {config.to}; baseline saved."
+            )
         return AlertOutcome(
             "baseline", [], "Baseline saved; no email sent for the first observation."
         )
@@ -534,22 +571,41 @@ def process_alerts(
         previous.setdefault("schema", "commodity-signal-desk/alerts/1")
         _write_state(state_file, previous)
         names = ", ".join(sorted(new_keys))
+        if always_send:
+            subject, text_body, html_body = build_message(
+                result, [], out_dir, digest=True
+            )
+            sender(config, subject, text_body, html_body)
+            return AlertOutcome(
+                "sent", [], f"Sent scheduled market update to {config.to}; added baseline for {names}."
+            )
         return AlertOutcome(
             "baseline", [], f"Baseline added for new instrument(s): {names}."
         )
 
     changes = detect_changes(previous, result)
-    if not changes:
+    if not changes and not always_send:
         # Deliberately do not move the baseline: confidence thresholds and
         # breakout crossings must be measured from the last alert, not from the
-        # previous five-minute poll.
+        # previous poll.
         return AlertOutcome("no-change", [], "No material signal changes.")
 
-    subject, text_body, html_body = build_message(result, changes, out_dir)
+    subject, text_body, html_body = build_message(
+        result, changes, out_dir, digest=always_send
+    )
     sender(config, subject, text_body, html_body)
-    save_state(state_file, result)
+    # A periodic digest must not advance the alert baseline unless it also
+    # contained a material change; otherwise small changes would never accumulate.
+    if changes:
+        save_state(state_file, result)
     return AlertOutcome(
-        "sent", changes, f"Sent {len(changes)} change(s) to {config.to}."
+        "sent",
+        changes,
+        (
+            f"Sent scheduled market update to {config.to}."
+            if always_send and not changes
+            else f"Sent {len(changes)} change(s) to {config.to}."
+        ),
     )
 
 
