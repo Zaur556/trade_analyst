@@ -53,6 +53,7 @@ from commodity_agent.alerts import (  # noqa: E402
     send_test_email,
 )
 from commodity_agent.config import ORDER  # noqa: E402
+from commodity_agent.dashboard import DASHBOARD_HTML  # noqa: E402
 from commodity_agent.pipeline import run  # noqa: E402
 
 
@@ -163,18 +164,53 @@ def _persist_state_file() -> None:
 
 
 def _signal_payload(result) -> list[dict]:
-    return [
-        {
-            "key": signal.asset.key,
-            "name": signal.asset.name,
-            "price": round(signal.price, 4),
-            "change_pct": round(signal.change_pct, 3),
-            "score": round(signal.score, 1),
-            "action": signal.action,
-            "confidence": round(signal.confidence, 1),
-        }
-        for signal in result.signals
-    ]
+    payload = []
+    for signal in result.signals:
+        plan = signal.plan
+        payload.append(
+            {
+                "key": signal.asset.key,
+                "name": signal.asset.name,
+                "unit": signal.asset.unit,
+                "price": round(signal.price, 4),
+                "change_pct": round(signal.change_pct, 3),
+                "score": round(signal.score, 1),
+                "action": signal.action,
+                "confidence": round(signal.confidence, 1),
+                "confidence_label": signal.confidence_label,
+                "factors": [
+                    {
+                        "key": factor.key,
+                        "label": factor.label,
+                        "score": round(factor.score, 3),
+                        "weight": round(factor.weight, 3),
+                        "points": round(factor.points, 2),
+                        "detail": factor.detail,
+                    }
+                    for factor in signal.factors
+                ],
+                "drivers": signal.drivers,
+                "risks": signal.risks,
+                "metrics": signal.metrics,
+                "plan": {
+                    "direction": plan.direction,
+                    "entry": plan.entry,
+                    "stop": plan.stop,
+                    "target": plan.target,
+                    "stop_distance": plan.stop_distance,
+                    "rr": plan.rr,
+                    "risk_per_contract": plan.risk_per_contract,
+                    "contracts": plan.contracts,
+                    "notional_per_contract": plan.notional_per_contract,
+                    "min_account_one_lot": plan.min_account_one_lot,
+                    "etf_notional": plan.etf_notional,
+                    "trigger_buy": plan.trigger_buy,
+                    "trigger_sell": plan.trigger_sell,
+                    "atr": plan.atr,
+                },
+            }
+        )
+    return payload
 
 
 def run_job(preview: bool = False, test_email: bool = False) -> dict:
@@ -239,12 +275,22 @@ class handler(BaseHTTPRequestHandler):
 
     def _serve(self) -> None:
         try:
+            parsed = urlparse(self.path)
+            if parsed.path in ("/", "/dashboard", "/dashboard/"):
+                body = DASHBOARD_HTML.encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Cache-Control", "no-store")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
+
             secret = os.environ.get("CRON_SECRET", "").strip()
             if not secret:
                 self._json(503, {"ok": False, "error": "CRON_SECRET is not configured."})
                 return
 
-            parsed = urlparse(self.path)
             query = parse_qs(parsed.query)
             supplied = self.headers.get("Authorization", "")
             query_token = (query.get("token") or [""])[0]
