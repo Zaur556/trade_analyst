@@ -213,8 +213,10 @@ def _signal_payload(result) -> list[dict]:
     return payload
 
 
-def run_job(preview: bool = False, test_email: bool = False) -> dict:
-    """Run one analysis cycle. preview/test_email skip state."""
+def run_job(
+    preview: bool = False, test_email: bool = False, digest: bool = False
+) -> dict:
+    """Run one analysis cycle; digest sends a scheduled book email every cycle."""
     if test_email:
         config = load_config()
         send_test_email(config)
@@ -245,7 +247,9 @@ def run_job(preview: bool = False, test_email: bool = False) -> dict:
             "warnings": result.warnings[:5],
         }
 
-    outcome = process_alerts(result, OUT_DIR, config=config)
+    outcome = process_alerts(
+        result, OUT_DIR, config=config, always_send=digest
+    )
     _persist_state_file()
 
     return {
@@ -255,6 +259,7 @@ def run_job(preview: bool = False, test_email: bool = False) -> dict:
         "news_count": result.news_count,
         "alert_status": outcome.status,
         "alert_message": outcome.message,
+        "email_mode": "two_hour_digest" if digest else "change_only",
         "changes": [
             {"asset": change.asset_name, "kind": change.kind, "headline": change.headline}
             for change in outcome.changes
@@ -303,7 +308,8 @@ class handler(BaseHTTPRequestHandler):
 
             preview = (query.get("preview") or ["0"])[0].lower() in ("1", "true", "yes")
             test_email = (query.get("test_email") or ["0"])[0].lower() in ("1", "true", "yes")
-            payload = run_job(preview=preview, test_email=test_email)
+            digest = (query.get("digest") or ["0"])[0].lower() in ("1", "true", "yes")
+            payload = run_job(preview=preview, test_email=test_email, digest=digest)
             self._json(200, payload)
         except AlertConfigError as exc:
             self._json(503, {"ok": False, "error": str(exc)})
