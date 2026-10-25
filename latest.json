@@ -1,0 +1,1359 @@
+{
+  "schema": "commodity-signal-desk/1.0",
+  "generated_at": "2026-10-25T11:17:50.238763+04:00",
+  "as_of": "2026-10-23",
+  "live_refresh_seconds": null,
+  "account_size": 50000.0,
+  "risk_pct": 1.0,
+  "news_window_days": 4.0,
+  "news_count": 781,
+  "macro": {
+    "quotes": [
+      {
+        "key": "dxy",
+        "name": "US Dollar Index",
+        "symbol": "DX-Y.NYB",
+        "price": 101.80999755859375,
+        "unit": "",
+        "change_1d": 0.19682801598350785,
+        "change_20d": 0.8319266393337355,
+        "change_kind": "pct",
+        "stale": false
+      },
+      {
+        "key": "yield10",
+        "name": "US 10Y Yield",
+        "symbol": "^TNX",
+        "price": 4.98799991607666,
+        "unit": "%",
+        "change_1d": 3.4999847412109375,
+        "change_20d": -19.60000991821289,
+        "change_kind": "bp",
+        "stale": false
+      },
+      {
+        "key": "vix",
+        "name": "VIX",
+        "symbol": "^VIX",
+        "price": 19.450000762939453,
+        "unit": "",
+        "change_1d": 2.20704183467888,
+        "change_20d": 30.800275135363076,
+        "change_kind": "pct",
+        "stale": false
+      },
+      {
+        "key": "spx",
+        "name": "S&P 500",
+        "symbol": "^GSPC",
+        "price": 7623.68017578125,
+        "unit": "",
+        "change_1d": -0.5186972294159098,
+        "change_20d": -1.5462177264639831,
+        "change_kind": "pct",
+        "stale": false
+      },
+      {
+        "key": "copper",
+        "name": "Copper",
+        "symbol": "HG=F",
+        "price": 6.507500171661377,
+        "unit": "USD/lb",
+        "change_1d": 2.278978020899136,
+        "change_20d": -2.8078519637636523,
+        "change_kind": "pct",
+        "stale": false
+      }
+    ],
+    "values": {
+      "dxy_ret20": 0.008319,
+      "yield_chg20": -0.196,
+      "vix": 19.450001,
+      "vix_chg20": 0.308003,
+      "spx_ret20": -0.015462,
+      "copper_ret20": -0.028079,
+      "gold_ret20": -0.072503,
+      "brent_wti_spread": 8.43
+    },
+    "brent_wti_spread": 8.430000305175781
+  },
+  "signals": [
+    {
+      "key": "brent",
+      "name": "Brent Crude Oil",
+      "symbol": "BZ=F",
+      "etf": "BNO",
+      "unit": "USD/bbl",
+      "price": 111.7,
+      "change": -1.47,
+      "change_pct": -1.2989,
+      "score": 44.29,
+      "action": "BUY",
+      "confidence": 62.1,
+      "confidence_label": "Medium",
+      "stale": false,
+      "factors": [
+        {
+          "key": "trend",
+          "label": "Trend",
+          "score": 0.882,
+          "weight": 0.35,
+          "points": 30.86,
+          "detail": "Price +4.8% vs 20D EMA, +4.9% 20/50 spread, +11.7% 50/200 spread; ADX 22 (bull)."
+        },
+        {
+          "key": "momentum",
+          "label": "Momentum",
+          "score": 0.545,
+          "weight": 0.2,
+          "points": 10.9,
+          "detail": "RSI 65, MACD histogram +0.47 (+0.11 ATR), 20D return +7.1%, 89% of 52W range."
+        },
+        {
+          "key": "meanrev",
+          "label": "Mean reversion",
+          "score": -0.357,
+          "weight": 0.1,
+          "points": -3.57,
+          "detail": "91% of the Bollinger band, +1.2 ATR from 20D EMA, no RSI extreme."
+        },
+        {
+          "key": "news",
+          "label": "News flow",
+          "score": 0.301,
+          "weight": 0.25,
+          "points": 7.53,
+          "detail": "310 stories (155 +, 34 -, 121 neutral), positive tone, led by geopolitics; effective sample 148.8."
+        },
+        {
+          "key": "macro",
+          "label": "Macro",
+          "score": -0.143,
+          "weight": 0.1,
+          "points": -1.43,
+          "detail": "Macro score from DXY +0.8%/20D, 10Y -20bp, VIX 19 (+31%), S&P -1.5%/20D, copper -2.8%/20D."
+        }
+      ],
+      "plan": {
+        "direction": "LONG",
+        "entry": 111.7,
+        "stop": 102.3002,
+        "target": 128.7906,
+        "stop_distance": 9.3998,
+        "rr": 1.8182,
+        "risk_per_contract": 9399.8139,
+        "contracts": 0,
+        "notional_per_contract": 111699.9969,
+        "min_account_one_lot": 939981.3932,
+        "etf_notional": 5941.6068,
+        "trigger_buy": 113.9173,
+        "trigger_sell": 96.1327,
+        "atr": 4.2726
+      },
+      "metrics": {
+        "ema20": 106.5348,
+        "ema50": 101.5171,
+        "ema200": 90.8756,
+        "rsi": 65.2881,
+        "atr": 4.2726,
+        "atr_pct": 3.8251,
+        "adx": 21.5923,
+        "macd_hist": 0.469,
+        "bb_pos": 91.3766,
+        "vol20": 0.281,
+        "ret_1d": -0.013,
+        "ret_5d": 0.0167,
+        "ret_20d": 0.0707,
+        "ret_60d": 0.2546,
+        "ret_ytd": 0.8357,
+        "high52": 118.35,
+        "low52": 58.92,
+        "range_pos": 88.8104,
+        "range_pos_pctile": 96.2302,
+        "volume_ratio": 1.0367
+      },
+      "drivers": [
+        "Trend +31 pts - Price +4.8% vs 20D EMA, +4.9% 20/50 spread, +11.7% 50/200 spread; ADX 22 (bull).",
+        "Momentum +11 pts - RSI 65, MACD histogram +0.47 (+0.11 ATR), 20D return +7.1%, 89% of 52W range.",
+        "News flow +8 pts - 310 stories (155 +, 34 -, 121 neutral), positive tone, led by geopolitics; effective sample 148.8."
+      ],
+      "risks": [
+        "Volatility is high (3.8% ATR/day); size down accordingly.",
+        "Price is at 89% of its 52W range; late-stage chase risk.",
+        "Geopolitical premium can unwind fast on de-escalation; headlines dominate.",
+        "Heavy news volume raises the chance of a crowded, headline-driven move."
+      ],
+      "news": {
+        "score": 0.301,
+        "article_count": 310,
+        "positive": 155,
+        "negative": 34,
+        "neutral": 121,
+        "effective_n": 148.8,
+        "coverage": 1.0,
+        "topics": [
+          {
+            "topic": "Geopolitics",
+            "weight": 37.02
+          },
+          {
+            "topic": "Sanctions",
+            "weight": 6.0
+          },
+          {
+            "topic": "Fed tightening",
+            "weight": 1.89
+          },
+          {
+            "topic": "OPEC+ supply increase",
+            "weight": 1.04
+          },
+          {
+            "topic": "Production cuts",
+            "weight": 1.04
+          }
+        ],
+        "headlines": [
+          {
+            "title": "Brent crude hits more than five-month high on Houthi-Saudi attacks, UAE oil spill",
+            "source": "CNBC Africa",
+            "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQS2dTZlpQN3doaDczZlNfV2stcUNvSjR6ZjdJUmd6b1BUQzI3UG84SjVETDVhNTZHb00zd3lJZ25Ic0dya0FQcUxyTEVwWEwzQjUtNmM3ZlZOQmlhbWM0Q3JxTzY5T3pMWGdVTEdMOFgyMXM0dUVIRXJXY1M2azRrRnlBdWwxWU95ZjdYTEVoYUlpRTF6cnB3UGhrMGV1Nk5ueTQ0bTg1NmFXTUwzQmtudVJvbw?oc=5",
+            "published": "2026-10-23T14:29:12+00:00",
+            "sentiment": 0.45,
+            "relevance": 26.4,
+            "topics": [
+              "Geopolitics"
+            ]
+          },
+          {
+            "title": "Brent crude oil prices remain above $116 per barrel after surge amid escalating tensions in Middle East",
+            "source": "Open4business.com.ua.",
+            "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNcUg4RlhuRU5ISTM2cDBXSW9yOXRKX3kxX29QbFR0eTc1bnJRV2ZtTW5SdXpTamJuOVBSNmVYdnFka05RMXF4TWxaR2RCMExTbEl1clpXMWc1dU1EQmtiTWdjNkRDeER4dEcyN0U0SXR4VEQ2SHd6bDlGTFVWY1pVRWdBSVpmRU9MYWtfamFFQlBTOWM0Z3dZZ3FNQVFjdzUzVUEtazBQb19rY1Q3Q2NDcGVJRWpWSXlqVlN1VTJWRmNnRHR0V01TNGc1WHduLUtr?oc=5",
+            "published": "2026-10-24T18:28:56+00:00",
+            "sentiment": 0.28,
+            "relevance": 26.4,
+            "topics": []
+          },
+          {
+            "title": "3 Oil Stocks Worth Watching As Brent Crude Tests $117",
+            "source": "Yahoo Finance",
+            "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPUUNoQnhNMEw1OW9ETlhtc2JSN0pnVHp3ZmpvVHFfdXVEYjJZeHU5dXVtNE9VT3lrRl8wUE5yZWJUVjlJMkk3YnM4X3FnUTRqekRTd1RZaWhncjlnQ19TSTVvRFc5ZlNKNTBiU0R1S0c1OURualdHN3NBOWZQb1ZoeVJmSUktbnlyRkM2cw?oc=5",
+            "published": "2026-10-25T05:13:00+00:00",
+            "sentiment": 0.0,
+            "relevance": 22.0,
+            "topics": []
+          },
+          {
+            "title": "Brent crude jumps to highest since April on Houthi attacks, UAE oil spill",
+            "source": "Nikkei Asia",
+            "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQaVZrWVBoNGh2Mm03d1RPRzdqRHluRW5ZMXhwYTBoMm9tQmQxdXpnek9UZi0ycDVRTnNacUlFMGE3aUdoazRya3lsMUswVi1xUk5sVzNqNmdPb1NvLWdUUFQ3ejJPazJJRl85RTlxNlAwWGtHVEtEUS1GdlUyX3Y4VElqVm4tT0Q4N1RwZE1mU1BUVjlTakNmSkZuRWZYQ1pLR2ZXWVlSUXloTEFnUkdpaEw0SkVDMmFrWElQUmRjaGluOWs?oc=5",
+            "published": "2026-10-23T19:23:00+00:00",
+            "sentiment": 1.0,
+            "relevance": 22.0,
+            "topics": [
+              "Geopolitics"
+            ]
+          },
+          {
+            "title": "Middle East Conflict Escalates: Brent Crude Nears $117 as Strait of Hormuz Records 28 Ship Attacks in October, the Deadliest Month This Year",
+            "source": "BigGo Finance",
+            "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1IdE9HNUJ6WmFiWXBneDQ3SUpYS1VhWlJmVEo3czlhTjNkMVlUOU51UXp6YjQ2cXlfRkszXzJySlhZV3FKdlpyVkRrOUhzaEg4bnNqMFFweF8tY0h1ODVYRVg2Szl3NHpBQ1M4N1hieW5IS0JUbXc?oc=5",
+            "published": "2026-10-24T18:05:00+00:00",
+            "sentiment": 0.45,
+            "relevance": 24.2,
+            "topics": [
+              "Geopolitics"
+            ]
+          },
+          {
+            "title": "Record Tanker Rates Cripple U.S. Crude Oil Flows to Asia",
+            "source": "OilPrice.com",
+            "url": "https://oilprice.com/Energy/Crude-Oil/Record-Tanker-Rates-Cripple-US-Crude-Oil-Flows-to-Asia.html",
+            "published": "2026-10-24T23:00:00+00:00",
+            "sentiment": 0.365,
+            "relevance": 15.35,
+            "topics": [
+              "Geopolitics"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "wti",
+      "name": "WTI Crude Oil",
+      "symbol": "CL=F",
+      "etf": "USO",
+      "unit": "USD/bbl",
+      "price": 103.27,
+      "change": 3.8,
+      "change_pct": 3.8202,
+      "score": 43.39,
+      "action": "BUY",
+      "confidence": 65.9,
+      "confidence_label": "Medium",
+      "stale": false,
+      "factors": [
+        {
+          "key": "trend",
+          "label": "Trend",
+          "score": 0.898,
+          "weight": 0.35,
+          "points": 31.45,
+          "detail": "Price +6.8% vs 20D EMA, +3.9% 20/50 spread, +9.8% 50/200 spread; ADX 29 (bull)."
+        },
+        {
+          "key": "momentum",
+          "label": "Momentum",
+          "score": 0.56,
+          "weight": 0.2,
+          "points": 11.19,
+          "detail": "RSI 63, MACD histogram +0.77 (+0.17 ATR), 20D return +11.8%, 83% of 52W range."
+        },
+        {
+          "key": "meanrev",
+          "label": "Mean reversion",
+          "score": -0.321,
+          "weight": 0.1,
+          "points": -3.21,
+          "detail": "94% of the Bollinger band, +1.4 ATR from 20D EMA, no RSI extreme."
+        },
+        {
+          "key": "news",
+          "label": "News flow",
+          "score": 0.215,
+          "weight": 0.25,
+          "points": 5.39,
+          "detail": "287 stories (121 +, 34 -, 132 neutral), positive tone, led by geopolitics; effective sample 124.8."
+        },
+        {
+          "key": "macro",
+          "label": "Macro",
+          "score": -0.143,
+          "weight": 0.1,
+          "points": -1.43,
+          "detail": "Macro score from DXY +0.8%/20D, 10Y -20bp, VIX 19 (+31%), S&P -1.5%/20D, copper -2.8%/20D."
+        }
+      ],
+      "plan": {
+        "direction": "LONG",
+        "entry": 103.27,
+        "stop": 93.1569,
+        "target": 121.6575,
+        "stop_distance": 10.1131,
+        "rr": 1.8182,
+        "risk_per_contract": 10113.1374,
+        "contracts": 0,
+        "notional_per_contract": 103269.9966,
+        "min_account_one_lot": 1011313.7413,
+        "etf_notional": 5105.7349,
+        "trigger_buy": 110.9397,
+        "trigger_sell": 86.4003,
+        "atr": 4.5969
+      },
+      "metrics": {
+        "ema20": 96.721,
+        "ema50": 93.1174,
+        "ema200": 84.7928,
+        "rsi": 62.9516,
+        "atr": 4.5969,
+        "atr_pct": 4.4513,
+        "adx": 29.3668,
+        "macd_hist": 0.771,
+        "bb_pos": 93.9497,
+        "vol20": 0.3762,
+        "ret_1d": 0.0382,
+        "ret_5d": 0.0183,
+        "ret_20d": 0.1175,
+        "ret_60d": 0.2354,
+        "ret_ytd": 0.7985,
+        "high52": 112.95,
+        "low52": 55.27,
+        "range_pos": 83.2178,
+        "range_pos_pctile": 95.4365,
+        "volume_ratio": 1.0239
+      },
+      "drivers": [
+        "Trend +31 pts - Price +6.8% vs 20D EMA, +3.9% 20/50 spread, +9.8% 50/200 spread; ADX 29 (bull).",
+        "Momentum +11 pts - RSI 63, MACD histogram +0.77 (+0.17 ATR), 20D return +11.8%, 83% of 52W range.",
+        "News flow +5 pts - 287 stories (121 +, 34 -, 132 neutral), positive tone, led by geopolitics; effective sample 124.8."
+      ],
+      "risks": [
+        "Volatility is high (4.5% ATR/day); size down accordingly.",
+        "Gold reacts sharply to real yields and Fed repricing; event risk is two-sided.",
+        "Heavy news volume raises the chance of a crowded, headline-driven move."
+      ],
+      "news": {
+        "score": 0.215,
+        "article_count": 287,
+        "positive": 121,
+        "negative": 34,
+        "neutral": 132,
+        "effective_n": 124.8,
+        "coverage": 1.0,
+        "topics": [
+          {
+            "topic": "Geopolitics",
+            "weight": 28.42
+          },
+          {
+            "topic": "Fed tightening",
+            "weight": 1.89
+          },
+          {
+            "topic": "Sanctions",
+            "weight": 1.89
+          },
+          {
+            "topic": "OPEC+ supply increase",
+            "weight": 1.5
+          },
+          {
+            "topic": "Production cuts",
+            "weight": 1.04
+          }
+        ],
+        "headlines": [
+          {
+            "title": "December WTI Crude Oil Contract Closes Up $3.80, or 3.8%; Settles at $103.27 per Barrel. December Brent Oil Was Last Seen Up $3.10, or 2.7%, to $116.27",
+            "source": "marketscreener.com",
+            "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxON1g2MURxaUpqdXlNaGhWaDdtUmEyNjRTNnpRLVBYdzItU0pBNkRhbXVGWkdiQTFIcm5hdWhORUtPNENrbEdOVTRrbGFoQmR6blc0V3hZNzNNLXplejBndVY5eEpSWFd5bHpzV1R1RDlFbmh4dERhZ1d5ZW5LaTNyT0hXd1IzQUh2U0hVU2JOeUxNMkhEdWl1ekZrcmVOcVd0RHNsR3p4NnNyLXAzNzdRMDZhTVV5WEdfbXB4NkI3U19NMzYzLUttVmIyWW5yQjhDM1FrMURWWVZNU0FSd2pzNw?oc=5",
+            "published": "2026-10-23T18:36:34+00:00",
+            "sentiment": 0.0,
+            "relevance": 26.4,
+            "topics": []
+          },
+          {
+            "title": "Record Tanker Rates Cripple U.S. Crude Oil Flows to Asia",
+            "source": "OilPrice.com",
+            "url": "https://oilprice.com/Energy/Crude-Oil/Record-Tanker-Rates-Cripple-US-Crude-Oil-Flows-to-Asia.html",
+            "published": "2026-10-24T23:00:00+00:00",
+            "sentiment": 0.331,
+            "relevance": 11.0,
+            "topics": [
+              "Geopolitics"
+            ]
+          },
+          {
+            "title": "Crude Oil Near $100, Brent–WTI Spread Widens on War and Inventory Draws — CMB News",
+            "source": "CMB News",
+            "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOQUdRUkdna3RrVU9TdjB3am1UQ0pWMWZ4TXJxUWxCVkgwOE9qN0RUTjZjbW82RVh2UEM5d2h2cUxsZVg4LU8xdXV0ZE5yTHlhSGxoam1YMVJBeTRHYjQzU1JuTjFFakE2NTM5TWZxN19icE1zNEJOVGZtU2taZERVTXEtR3N3MnNrY0RsdkhiVEMwbllKaTJCUGpEaFVmNWEyN2pv?oc=5",
+            "published": "2026-10-23T06:37:38+00:00",
+            "sentiment": 0.723,
+            "relevance": 26.4,
+            "topics": [
+              "Geopolitics",
+              "Inventory draw"
+            ]
+          },
+          {
+            "title": "Brent crude oil prices remain above $116 per barrel after surge amid escalating tensions in Middle East",
+            "source": "Open4business.com.ua.",
+            "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNcUg4RlhuRU5ISTM2cDBXSW9yOXRKX3kxX29QbFR0eTc1bnJRV2ZtTW5SdXpTamJuOVBSNmVYdnFka05RMXF4TWxaR2RCMExTbEl1clpXMWc1dU1EQmtiTWdjNkRDeER4dEcyN0U0SXR4VEQ2SHd6bDlGTFVWY1pVRWdBSVpmRU9MYWtfamFFQlBTOWM0Z3dZZ3FNQVFjdzUzVUEtazBQb19rY1Q3Q2NDcGVJRWpWSXlqVlN1VTJWRmNnRHR0V01TNGc1WHduLUtr?oc=5",
+            "published": "2026-10-24T18:28:56+00:00",
+            "sentiment": 0.28,
+            "relevance": 15.4,
+            "topics": []
+          },
+          {
+            "title": "Oil Stocks Rally as WTI Crude Price Tops $103: Devon Energy and Diamondback Energy Gain 5%, Occidental Petroleum Rises 3%",
+            "source": "24/7 Wall St.",
+            "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQVEZEN0tEdkhxVWRMUUdBdFpvTHdMclRWMWk4VFo2ckV3M21mUFRBakd2RWxBUEI5RmJMQjJHQjFDTTFHUWItT3l0UHNvWk03dklUb3FaX3ZuNXAxcWVRUHFmWGpFQ1NKU3FhOUYza09zaERVLWZwMEJDVmNKa2ctNVFtY0NIYklhOUNmdmlCdFJQNjZlckEwWGltWHlTTko3NS1LcWhSOTJwZnF3cGs0dkhXbnZMaVpHYzZxbVk5R0Q4cGFNdmNTeGt1TFZmTDJwaXhxc2dGYkp3M3FoUUFuNGdrTTZpNl9pUWc?oc=5",
+            "published": "2026-10-23T17:05:00+00:00",
+            "sentiment": 0.28,
+            "relevance": 22.0,
+            "topics": []
+          },
+          {
+            "title": "WTI crude oil hits $100 as Saudi supply fears keep oil markets on edge",
+            "source": "Gulf News",
+            "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQbE5QdTZOZm9FNXAtYjhVSlJnTnhycEpXdFZrRVRETV9PRVg3d0hndlJQQlR1VDM0QnJjLVJ2aXZ6TzAyc2pBMlpxTWgzTDdidFNtSWl6OEJzUGpsMlBZT2JDUXBSTERuTmhhOFZDUm95S2xVd0tTaWFzQTRxN28tcEVHWklEMWNLNWpBNEZyc3ByUU5KUXdOZ3lNbWFJWGt6MXZ6RVRHVkpSdE83X2dKaWZ2eTVEOHNlcXfSAcwBQVVfeXFMTk9yQ2Y1VmMtc1dsOS1iWDNBRkRJVi1IM3pMR3dnWXk4TnAyeDdHdWphOXFCRC1nZXBoT3hvN2F2a0NsUkR1U1ZWTl9rOWlBWkhZaHFXMnFUY251d0FEZlRHSTFXbm1GM3BaZUNEMW5SVGJHRnFBSmxhLVZUYm9OekdVNGtGSmd1Wk04V25SQjFndnNhRUdGMDNHNzVVVnNISG9BRUVuRkFVQmRBWThORGl2cW1lRWtrR3g3R2trTXNENWFKUjJlRDZsSlN1?oc=5",
+            "published": "2026-10-23T04:21:49+00:00",
+            "sentiment": -0.2,
+            "relevance": 24.2,
+            "topics": []
+          }
+        ]
+      }
+    },
+    {
+      "key": "gold",
+      "name": "Gold",
+      "symbol": "GC=F",
+      "etf": "GLD",
+      "unit": "USD/oz",
+      "price": 4007.8999,
+      "change": -52.5,
+      "change_pct": -1.293,
+      "score": -24.0,
+      "action": "SELL",
+      "confidence": 65.6,
+      "confidence_label": "Medium",
+      "stale": false,
+      "factors": [
+        {
+          "key": "trend",
+          "label": "Trend",
+          "score": -0.657,
+          "weight": 0.3,
+          "points": -19.72,
+          "detail": "Price -3.9% vs 20D EMA, -1.9% 20/50 spread, -1.2% 50/200 spread; ADX 24 (bear)."
+        },
+        {
+          "key": "momentum",
+          "label": "Momentum",
+          "score": -0.597,
+          "weight": 0.15,
+          "points": -8.95,
+          "detail": "RSI 31, MACD histogram -6.33 (-0.08 ATR), 20D return -7.3%, 3% of 52W range."
+        },
+        {
+          "key": "meanrev",
+          "label": "Mean reversion",
+          "score": 0.452,
+          "weight": 0.1,
+          "points": 4.52,
+          "detail": "28% below the lower Bollinger band, -2.1 ATR from 20D EMA, no RSI extreme."
+        },
+        {
+          "key": "news",
+          "label": "News flow",
+          "score": -0.121,
+          "weight": 0.2,
+          "points": -2.42,
+          "detail": "216 stories (37 +, 65 -, 114 neutral), negative tone, led by fed tightening; effective sample 85.3."
+        },
+        {
+          "key": "macro",
+          "label": "Macro",
+          "score": 0.103,
+          "weight": 0.25,
+          "points": 2.57,
+          "detail": "Macro score from DXY +0.8%/20D, 10Y -20bp, VIX 19 (+31%), S&P -1.5%/20D, copper -2.8%/20D."
+        }
+      ],
+      "plan": {
+        "direction": "SHORT",
+        "entry": 4007.8999,
+        "stop": 4182.2337,
+        "target": 3690.9294,
+        "stop_distance": 174.3338,
+        "rr": 1.8182,
+        "risk_per_contract": 17433.3753,
+        "contracts": 0,
+        "notional_per_contract": 400789.9902,
+        "min_account_one_lot": 1743337.5271,
+        "etf_notional": 11494.9051,
+        "trigger_buy": 4323.5244,
+        "trigger_sell": 3981.1758,
+        "atr": 79.2426
+      },
+      "metrics": {
+        "ema20": 4171.2649,
+        "ema50": 4253.6424,
+        "ema200": 4306.2059,
+        "rsi": 30.7176,
+        "atr": 79.2426,
+        "atr_pct": 1.9772,
+        "adx": 24.3311,
+        "macd_hist": -6.3269,
+        "bb_pos": -27.869,
+        "vol20": 0.187,
+        "ret_1d": -0.0129,
+        "ret_5d": -0.0414,
+        "ret_20d": -0.0725,
+        "ret_60d": -0.0225,
+        "ret_ytd": -0.0768,
+        "high52": 5318.3999,
+        "low52": 3960.5,
+        "range_pos": 3.4907,
+        "range_pos_pctile": 3.373,
+        "volume_ratio": 1.004
+      },
+      "drivers": [
+        "Trend -20 pts - Price -3.9% vs 20D EMA, -1.9% 20/50 spread, -1.2% 50/200 spread; ADX 24 (bear).",
+        "Momentum -9 pts - RSI 31, MACD histogram -6.33 (-0.08 ATR), 20D return -7.3%, 3% of 52W range.",
+        "Mean reversion +5 pts - 28% below the lower Bollinger band, -2.1 ATR from 20D EMA, no RSI extreme."
+      ],
+      "risks": [
+        "Score -24 sits near a decision threshold; a small move flips it.",
+        "Price is at 3% of its 52W range; mean-reversion bounce risk is elevated.",
+        "Gold reacts sharply to real yields and Fed repricing; event risk is two-sided.",
+        "Heavy news volume raises the chance of a crowded, headline-driven move."
+      ],
+      "news": {
+        "score": -0.121,
+        "article_count": 216,
+        "positive": 37,
+        "negative": 65,
+        "neutral": 114,
+        "effective_n": 85.3,
+        "coverage": 1.0,
+        "topics": [
+          {
+            "topic": "Fed tightening",
+            "weight": 4.96
+          },
+          {
+            "topic": "Safe-haven demand",
+            "weight": 3.86
+          },
+          {
+            "topic": "Inflation",
+            "weight": 1.15
+          },
+          {
+            "topic": "ETF inflows",
+            "weight": 0.63
+          },
+          {
+            "topic": "Geopolitics",
+            "weight": 0.58
+          }
+        ],
+        "headlines": [
+          {
+            "title": "Gold set for steep weekly loss as rising oil prices bolster Fed rate hike bets",
+            "source": "Reuters",
+            "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOWE1LcUgzRWRwVDZmX3FEaWszVHF0cFQ1ekt6M1pyQ0lfc05PQm9DekdZcXprdm1vQk00SlNEZjEwQllCd1VwMUJySnIxcF9ZblFaRHFsV3BzSU52SlJSSi1TeWxoTmdYc1h6UHhPQTFQYU41ZEdQTFRNY3l0N1Q2bnRDV2x1MjlveGtxTk1oQWlGd3ExcUZEd2QzdF9TUkVKcXotUlIycUgtb1RrZjJ3?oc=5",
+            "published": "2026-10-23T14:57:51+00:00",
+            "sentiment": -0.78,
+            "relevance": 20.9,
+            "topics": [
+              "Fed tightening"
+            ]
+          },
+          {
+            "title": "Gold Price Short-term Outlook: XAU/USD Holds Critical Support as Breakout Nears",
+            "source": "StoneX",
+            "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQSXVHTFJfVEpSaGhVMFAtakNvaGxDVWNJUWx3enlfOE9hZ283MmMzWWJld3hVc01HWlozSWZEcjl6WUNHa20tOG1XdmZvbzB1eGNrckhCTUR2S3hOSUNRSk0zcE01RXA3U2RpZlZvM18yZVlUN3hidmd2bGhUay1faDJPaE51TUxldFRVanFsZFNoWWVieS1HYVUwSDZwYTcwQ3RQaVpVR1F4OWRKazdDX2pYOXlmZFptZUltUzAyaXJSelNN?oc=5",
+            "published": "2026-10-25T00:17:39+00:00",
+            "sentiment": 0.0,
+            "relevance": 22.0,
+            "topics": []
+          },
+          {
+            "title": "Silver crashes ₹56000/kg from August peak; gold slides 23000/10 grams. What’s driving the selloff in precious metals",
+            "source": "Livemint",
+            "url": "https://news.google.com/rss/articles/CBMilAJBVV95cUxNSERQMWlydW9wT2t2LWRqM1RvdUwyRWw1NTZWQmZyV1dtWmNuREl6Qll4blZYWHZqc1hkSDl2QWE0OHNFaWhFY29oVm12ZXFoY3NyRzJ0Uk5LZ2R3SnV2bkJIbFB3ZWRvdk9XWk9mS3V6WDlZUmZ6WmI4NDl2d3hLRmNfWDdyZmthcXMtV01Hc3N0SEVNdnBTU1luTXA3Y1JoVWwxdVFCQjJnT0xBZ2x2ZlFVUEJHOEc0TXI2SmtBWUNKM3ZNdm4yUjE5R1FSZWMwa0MyWVVUSktGVGtWdHhpU3V2Wi05dkxmQ3FoRWlsUkpzY08teHY3RXNkamZPZkNfSUpSNmxsaC1LdUFYM3R6MXpyaTbSAZoCQVVfeXFMTXZkMzRiaXpMNTNRYU9JOUsxZmQ0Uy1Zdmpaa0FaZUh6cEE4MFFjT1FzNERWZHl2M0IyOFJobm5oRzh3YjNjWFhtb01LWVk0QjNjWHpDQUE3cmVoTHBmc2QzZE5nWmREVzVKTzRSeHMyTkxzU29JcEptSHpqemxzOXhIWnpWOWczb2thUHpYOHpLcXlabUxCck5JX0Q0Z0FoNlVhZzZmR0NyQnRDX01vX0lTQ1Y5UzdOUnFnaUpILVVBT0ZXSzREcWVHYkhRX0drMTVYa0M5MEdxMjA0VXNOVVd0c010UHZPeGRKcnZxa0tzV1NBZnhMbUIyM09JNnhVYTNWU3hHVUc0TnBHNUVMM19ucEp5ZDNCU1FR?oc=5",
+            "published": "2026-10-23T14:29:42+00:00",
+            "sentiment": -0.28,
+            "relevance": 28.6,
+            "topics": []
+          },
+          {
+            "title": "Gold (XAU/USD) Price Forecast: Bearish Momentum Puts Major Support at Risk",
+            "source": "FXEmpire",
+            "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNVVlMV0p6MmhrT2NsanpnY3ZPLUp4SGJQQk5JRkpNYVJ0aExicFluSU1aaG5nQXhGcEdYc2dLZ1dhREJfazQxZjM2S1BpQ0g5RG1DVUdFYWNfTkQ2V0VXRU1iUWZNOERJb2Y2Q3JEQUY5QndxcVZBaTFIS1djVDVtZXhrTlREcHZRbkp6UGJqUURqUFV2VGxlakxTYnlYX2drcUpYT0lTS1FxN0lmTHBkbWVHSW9CWGY5SDRpUkRkTQ?oc=5",
+            "published": "2026-10-24T03:57:00+00:00",
+            "sentiment": -0.2,
+            "relevance": 22.0,
+            "topics": []
+          },
+          {
+            "title": "Why Are Gold & Silver Falling? Fed Rate & Oil Fears",
+            "source": "SD Bullion",
+            "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQdVVFaDNLa0FGbDlISkljc0p0MnZQd2dIeFpvenF0cHJVdm81NWNDYzJtLW9uM05kbFltbTNfcEFuZlhaNUZuaFlkRnEwRHJrX3BFem1SSjA2VklXXy0zUWIzWlJYYXZiOFcwNmtUdVE5RFlwX0JCNk1BbmVzelFyNXUzeVJrM05nN3VaM2VFZmxJU19HMXdVaWxUcFVPdDNqYUE4dg?oc=5",
+            "published": "2026-10-24T13:13:47+00:00",
+            "sentiment": -0.2,
+            "relevance": 18.9,
+            "topics": []
+          },
+          {
+            "title": "Gold market and central banks: Russia, Kazakhstan sell as Poland, China buy",
+            "source": "Yahoo Finance UK",
+            "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNMHItSFJobjRyTUNZSVJTS3JvaHRNQzJORFpEb0x3MUJLQ1VIS1RCZW10Vm15TFNoSlpfTE5zRkdIU212VE16a0F0TzBqWEQwX2c2S1l4T244REkwZ2c3NVhfZTdRRjNFcWlVMm8wQmFVQ0x3NGp0Zm9TRXI1c0x1ajUzdU44YmJ3?oc=5",
+            "published": "2026-10-25T06:58:00+00:00",
+            "sentiment": 0.0,
+            "relevance": 14.3,
+            "topics": []
+          }
+        ]
+      }
+    },
+    {
+      "key": "silver",
+      "name": "Silver",
+      "symbol": "SI=F",
+      "etf": "SLV",
+      "unit": "USD/oz",
+      "price": 53.949,
+      "change": -0.815,
+      "change_pct": -1.4882,
+      "score": -34.78,
+      "action": "SELL",
+      "confidence": 62.9,
+      "confidence_label": "Medium",
+      "stale": false,
+      "factors": [
+        {
+          "key": "trend",
+          "label": "Trend",
+          "score": -0.904,
+          "weight": 0.3,
+          "points": -27.12,
+          "detail": "Price -7.9% vs 20D EMA, -4.3% 20/50 spread, -4.4% 50/200 spread; ADX 33 (bear)."
+        },
+        {
+          "key": "momentum",
+          "label": "Momentum",
+          "score": -0.677,
+          "weight": 0.2,
+          "points": -13.54,
+          "detail": "RSI 30, MACD histogram -0.33 (-0.24 ATR), 20D return -16.0%, 11% of 52W range."
+        },
+        {
+          "key": "meanrev",
+          "label": "Mean reversion",
+          "score": 0.372,
+          "weight": 0.1,
+          "points": 3.72,
+          "detail": "4% below the lower Bollinger band, -3.4 ATR from 20D EMA, no RSI extreme."
+        },
+        {
+          "key": "news",
+          "label": "News flow",
+          "score": -0.123,
+          "weight": 0.2,
+          "points": -2.46,
+          "detail": "93 stories (7 +, 28 -, 58 neutral), negative tone, led by etf inflows; effective sample 27.0."
+        },
+        {
+          "key": "macro",
+          "label": "Macro",
+          "score": 0.231,
+          "weight": 0.2,
+          "points": 4.62,
+          "detail": "Macro score from DXY +0.8%/20D, 10Y -20bp, VIX 19 (+31%), S&P -1.5%/20D, copper -2.8%/20D."
+        }
+      ],
+      "plan": {
+        "direction": "SHORT",
+        "entry": 53.949,
+        "stop": 56.993,
+        "target": 48.4144,
+        "stop_distance": 3.044,
+        "rr": 1.8182,
+        "risk_per_contract": 15220.224,
+        "contracts": 0,
+        "notional_per_contract": 269745.0066,
+        "min_account_one_lot": 1522022.4007,
+        "etf_notional": 8861.4007,
+        "trigger_buy": 61.7534,
+        "trigger_sell": 52.9366,
+        "atr": 1.3837
+      },
+      "metrics": {
+        "ema20": 58.6048,
+        "ema50": 61.2541,
+        "ema200": 64.0926,
+        "rsi": 30.1544,
+        "atr": 1.3837,
+        "atr_pct": 2.5647,
+        "adx": 32.8862,
+        "macd_hist": -0.3296,
+        "bb_pos": -4.0167,
+        "vol20": 0.3609,
+        "ret_1d": -0.0149,
+        "ret_5d": -0.0534,
+        "ret_20d": -0.1603,
+        "ret_60d": -0.0827,
+        "ret_ytd": -0.2308,
+        "high52": 115.08,
+        "low52": 46.562,
+        "range_pos": 10.7811,
+        "range_pos_pctile": 10.119,
+        "volume_ratio": 7.3661
+      },
+      "drivers": [
+        "Trend -27 pts - Price -7.9% vs 20D EMA, -4.3% 20/50 spread, -4.4% 50/200 spread; ADX 33 (bear).",
+        "Momentum -14 pts - RSI 30, MACD histogram -0.33 (-0.24 ATR), 20D return -16.0%, 11% of 52W range.",
+        "Macro +5 pts - Macro score from DXY +0.8%/20D, 10Y -20bp, VIX 19 (+31%), S&P -1.5%/20D, copper -2.8%/20D."
+      ],
+      "risks": [
+        "Price is at 11% of its 52W range; mean-reversion bounce risk is elevated.",
+        "Silver is high-beta to gold and industrial cycles; stops need room.",
+        "Heavy news volume raises the chance of a crowded, headline-driven move."
+      ],
+      "news": {
+        "score": -0.123,
+        "article_count": 93,
+        "positive": 7,
+        "negative": 28,
+        "neutral": 58,
+        "effective_n": 27.0,
+        "coverage": 1.0,
+        "topics": [
+          {
+            "topic": "ETF inflows",
+            "weight": 0.63
+          },
+          {
+            "topic": "Geopolitics",
+            "weight": 0.2
+          },
+          {
+            "topic": "Safe-haven demand",
+            "weight": 0.18
+          }
+        ],
+        "headlines": [
+          {
+            "title": "Silver crashes ₹56000/kg from August peak; gold slides 23000/10 grams. What’s driving the selloff in precious metals",
+            "source": "Livemint",
+            "url": "https://news.google.com/rss/articles/CBMilAJBVV95cUxNSERQMWlydW9wT2t2LWRqM1RvdUwyRWw1NTZWQmZyV1dtWmNuREl6Qll4blZYWHZqc1hkSDl2QWE0OHNFaWhFY29oVm12ZXFoY3NyRzJ0Uk5LZ2R3SnV2bkJIbFB3ZWRvdk9XWk9mS3V6WDlZUmZ6WmI4NDl2d3hLRmNfWDdyZmthcXMtV01Hc3N0SEVNdnBTU1luTXA3Y1JoVWwxdVFCQjJnT0xBZ2x2ZlFVUEJHOEc0TXI2SmtBWUNKM3ZNdm4yUjE5R1FSZWMwa0MyWVVUSktGVGtWdHhpU3V2Wi05dkxmQ3FoRWlsUkpzY08teHY3RXNkamZPZkNfSUpSNmxsaC1LdUFYM3R6MXpyaTbSAZoCQVVfeXFMTXZkMzRiaXpMNTNRYU9JOUsxZmQ0Uy1Zdmpaa0FaZUh6cEE4MFFjT1FzNERWZHl2M0IyOFJobm5oRzh3YjNjWFhtb01LWVk0QjNjWHpDQUE3cmVoTHBmc2QzZE5nWmREVzVKTzRSeHMyTkxzU29JcEptSHpqemxzOXhIWnpWOWczb2thUHpYOHpLcXlabUxCck5JX0Q0Z0FoNlVhZzZmR0NyQnRDX01vX0lTQ1Y5UzdOUnFnaUpILVVBT0ZXSzREcWVHYkhRX0drMTVYa0M5MEdxMjA0VXNOVVd0c010UHZPeGRKcnZxa0tzV1NBZnhMbUIyM09JNnhVYTNWU3hHVUc0TnBHNUVMM19ucEp5ZDNCU1FR?oc=5",
+            "published": "2026-10-23T14:29:42+00:00",
+            "sentiment": -0.28,
+            "relevance": 28.6,
+            "topics": []
+          },
+          {
+            "title": "Silver (XAG) Forecast: Crude and Rate Risk Keep XAGUSD Under Pressure",
+            "source": "FXEmpire",
+            "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPNE52bTFkOGIyaGJRZm1tOFI5RDdYQ3FFTFl4T0dBY0JNb3FUTFlOZk5Takg0LVZUbFpIY3M1SlJIRkZYWVRNQ21Ka0lQallOY0JRRFZGcEJ2TGxseHhSU1pVZWRMUWdtNERrOW1nWEhKSlVvSTFJNTQxRDJ3Y0syejc4UkRfVG5TbEpxRGRWQkt6emVKakI5WC1pY0RuWnZXdTd1bVZWUnhuR0RXb2J1V3FVRGhuMXZx?oc=5",
+            "published": "2026-10-24T00:34:35+00:00",
+            "sentiment": 0.0,
+            "relevance": 22.0,
+            "topics": []
+          },
+          {
+            "title": "YTD low rebound: Silver Price Forecast for XAG/USD points to an uncertain outlook",
+            "source": "www.tmgm.com",
+            "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxOUUY2dF96bEM5OU5YdHQ0VlZ4LWlRWEhQZzZLTWZxT2ZWQkRybnh1RHJzYWZtTnZINnBmV0Q2UWI5V0ttVXNHaFNDVjJVQ0NqSEFyMnVBX2lIN2M1QzVmYl9uR0o5LVowWkdRczNYaUxFTFB0NWdtVWNtM0VMbWtrTk5NT2FpZkdXS3F2ZW44UHJLaVo2akFubGx0SjRZN0c4WC1Nd1gtVExrZl9tWXZOeXIycFlja1NwcU1xNnQ1c1o5ZURZSkxvc3RIazMyNnh0cjdud3FDU0tSWWY0?oc=5",
+            "published": "2026-10-23T14:12:51+00:00",
+            "sentiment": 0.28,
+            "relevance": 22.0,
+            "topics": []
+          },
+          {
+            "title": "Silver Price Forecast: Can XAG/USD sustain its rebound from the YTD low amid an uncertain outlook?",
+            "source": "www.tmgm.com",
+            "url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQMXhtZC13bnBfV0Q2TE9fS1U4OUVwdUxWVVNQcXdnTnBPOGxZSUxzZEZNYlpZMUpra0VISnczWEQwb2JPdXRDampxMmJmdEtUUVhQb3VsOVBfVzE5dlNtUExBRTJob1lXbklMYml2SEEwZVFjZ25maUJqOV84S2xhUnNVNnIxMjlnTVBFRlZieUlIcXZBUXpoM3lob2YyMlhLcWJRSXdlVlV2MXVCZ0psenlpWnQ1bVVGTGQxaEtuVHVqWXh0YkIxZXJWUzhBaU1RU0s3OTRzVHdSVXlfQ1pz?oc=5",
+            "published": "2026-10-23T10:33:07+00:00",
+            "sentiment": 0.28,
+            "relevance": 22.0,
+            "topics": []
+          },
+          {
+            "title": "Silver Rate Today in North East Delhi 25th October 2026 : 1 KG, Todays Silver Price in North East Delhi",
+            "source": "Business Today",
+            "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQeWJmVWlqMXdOLW5vOEp4aFl2b3cyVEhxcDFDT3pNS1BmbzRGSzk0YXMwTTV1UnRDcWs2MHpaXzdMd2ZfUEF5VjFIWWxybi1GSFJnb2c2Z1kwMjE3WHN0SGhlZ29DUm00TnB1TDBCdGNkVlFiaTRiQnFCcGppRVNrVWx3?oc=5",
+            "published": "2026-10-25T06:15:45+00:00",
+            "sentiment": 0.0,
+            "relevance": 11.0,
+            "topics": []
+          },
+          {
+            "title": "Could silver rebound in 2027? What experts predict will happen next",
+            "source": "USA Today",
+            "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNRkJDZzh4R0xaQVhPUVJaMkNVSVB4WF9CZXBZcUdGeE91Y2VEdk82d2ZPWkxyNjBNdi1FNUdLMnBYNE5zd2QteU5ZV19vQjRBbTFOSzA4SF9aOTJmclktOWxJRG5LQzVWenlWSGdrdmZkRHlCWHlreWo5cDhxYTZScVhOeWt2VGJEZm1ndWV5YjZfZ2J5cGNNZGNBcDVMM0xYTk9LSA?oc=5",
+            "published": "2026-10-25T06:11:56+00:00",
+            "sentiment": 0.28,
+            "relevance": 11.0,
+            "topics": []
+          }
+        ]
+      }
+    },
+    {
+      "key": "gas",
+      "name": "Natural Gas",
+      "symbol": "NG=F",
+      "etf": "UNG",
+      "unit": "USD/MMBtu",
+      "price": 3.05,
+      "change": 0.254,
+      "change_pct": 9.0844,
+      "score": -9.3,
+      "action": "HOLD",
+      "confidence": 78.5,
+      "confidence_label": "High",
+      "stale": false,
+      "factors": [
+        {
+          "key": "trend",
+          "label": "Trend (faded)",
+          "score": -0.318,
+          "weight": 0.4,
+          "points": -12.73,
+          "detail": "Fade mode (gas mean-reverts; extended trends are faded): Price +0.4% vs 20D EMA, +1.3% 20/50 spread, -3.2% 50/200 spread; ADX 26 (bull)."
+        },
+        {
+          "key": "momentum",
+          "label": "Momentum (faded)",
+          "score": 0.332,
+          "weight": 0.15,
+          "points": 4.97,
+          "detail": "Fade mode (gas mean-reverts; extended trends are faded): RSI 51, MACD histogram -0.04 (-0.24 ATR), 20D return -4.6%, 11% of 52W range."
+        },
+        {
+          "key": "meanrev",
+          "label": "Mean reversion",
+          "score": 0.019,
+          "weight": 0.2,
+          "points": 0.38,
+          "detail": "46% of the Bollinger band, +0.1 ATR from 20D EMA, no RSI extreme."
+        },
+        {
+          "key": "news",
+          "label": "News flow",
+          "score": -0.057,
+          "weight": 0.2,
+          "points": -1.14,
+          "detail": "61 stories (17 +, 14 -, 30 neutral), mixed tone, led by mild weather; effective sample 25.9."
+        },
+        {
+          "key": "macro",
+          "label": "Macro",
+          "score": -0.158,
+          "weight": 0.05,
+          "points": -0.79,
+          "detail": "Macro score from DXY +0.8%/20D, 10Y -20bp, VIX 19 (+31%), S&P -1.5%/20D, copper -2.8%/20D."
+        }
+      ],
+      "plan": {
+        "direction": "FLAT",
+        "entry": null,
+        "stop": null,
+        "target": null,
+        "stop_distance": null,
+        "rr": null,
+        "risk_per_contract": null,
+        "contracts": 0,
+        "notional_per_contract": null,
+        "min_account_one_lot": null,
+        "etf_notional": null,
+        "trigger_buy": 3.35,
+        "trigger_sell": 2.71,
+        "atr": 0.1599
+      },
+      "metrics": {
+        "ema20": 3.0371,
+        "ema50": 2.9987,
+        "ema200": 3.099,
+        "rsi": 50.9195,
+        "atr": 0.1599,
+        "atr_pct": 5.2435,
+        "adx": 25.972,
+        "macd_hist": -0.0379,
+        "bb_pos": 45.5227,
+        "vol20": 0.535,
+        "ret_1d": 0.0908,
+        "ret_5d": -0.0212,
+        "ret_20d": -0.0457,
+        "ret_60d": 0.1059,
+        "ret_ytd": -0.1725,
+        "high52": 7.46,
+        "low52": 2.523,
+        "range_pos": 10.6745,
+        "range_pos_pctile": 48.2143,
+        "volume_ratio": 1.1053
+      },
+      "drivers": [
+        "Trend (faded) -13 pts - Fade mode (gas mean-reverts; extended trends are faded): Price +0.4% vs 20D EMA, +1.3% 20/50 spread, -3.2% 50/200 spread; ADX 26 (bull).",
+        "Momentum (faded) +5 pts - Fade mode (gas mean-reverts; extended trends are faded): RSI 51, MACD histogram -0.04 (-0.24 ATR), 20D return -4.6%, 11% of 52W range.",
+        "News flow -1 pts - 61 stories (17 +, 14 -, 30 neutral), mixed tone, led by mild weather; effective sample 25.9."
+      ],
+      "risks": [
+        "One-day move +9.1%: a spike like this often needs a session or two to consolidate before a signal is reliable.",
+        "Volatility is high (5.2% ATR/day); size down accordingly.",
+        "Price is at 11% of its 52W range; mean-reversion bounce risk is elevated.",
+        "Weather is the dominant driver and is only partly captured by news flow."
+      ],
+      "news": {
+        "score": -0.057,
+        "article_count": 61,
+        "positive": 17,
+        "negative": 14,
+        "neutral": 30,
+        "effective_n": 25.9,
+        "coverage": 1.0,
+        "topics": [
+          {
+            "topic": "Mild weather",
+            "weight": 2.22
+          },
+          {
+            "topic": "Geopolitics",
+            "weight": 2.16
+          },
+          {
+            "topic": "Strong demand",
+            "weight": 0.94
+          },
+          {
+            "topic": "Storage build",
+            "weight": 0.71
+          },
+          {
+            "topic": "Power demand",
+            "weight": 0.56
+          }
+        ],
+        "headlines": [
+          {
+            "title": "Winter’s No-Show Puts Natural Gas Bulls on Ice",
+            "source": "Natural Gas Intel",
+            "url": "https://naturalgasintel.com/news/winters-no-show-puts-natural-gas-bulls-on-ice/",
+            "published": "2026-10-23T19:03:29+00:00",
+            "sentiment": -0.125,
+            "relevance": 14.25,
+            "topics": [
+              "Strong demand",
+              "Mild weather"
+            ]
+          },
+          {
+            "title": "Energy Transfer vs. Kinder Morgan: Which Natural Gas Pipeline Stock Is the Better Buy for the AI Power Boom?",
+            "source": "The Motley Fool",
+            "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNWER4OXotUEZhTnNETkNPTVc5dkFWX2pBMlYzSEYtcFlxeGpYNXhIZ2R5QXJOYU5RTGMtYVRVSGo1THFuNEtRc0U5REdYVzR4cm9WSkRZa2x1WDNZX3BfZlpFcksxSEcyRmRzNHh6dWc2bWgwRHU0ajk3ZWJyVzJheFVqOHAxdFA3RHl6VFNtak5kQ1JiV2MyUA?oc=5",
+            "published": "2026-10-24T19:15:00+00:00",
+            "sentiment": 0.3,
+            "relevance": 14.3,
+            "topics": [
+              "Power demand"
+            ]
+          },
+          {
+            "title": "Wall Street Is Betting Big Against Natural Gas as a Mild Winter Looms",
+            "source": "24/7 Wall St.",
+            "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNQ1B5MTBYT1QxT1loakxzalNZS2Y0cEtqdkd2ZDY1akVNeTZuRUo2OXprUmdFMXUxWVppLXlCNzY3U2dwbng4VjFzeWtFZU1qRHRHcGZIRnU2anFGSHI2bFNqSVhHUmVnSDVEMkl2QnBTYVZpMloyMkN2STBKY09VS1JjZDFQQkNHSlZXOW5sa0ZQZG40Nzd4XzQxXzRNWEVIVFZBN25hUWZwX2RKcGxrMXZqbw?oc=5",
+            "published": "2026-10-24T16:35:00+00:00",
+            "sentiment": -0.45,
+            "relevance": 13.2,
+            "topics": [
+              "Mild weather"
+            ]
+          },
+          {
+            "title": "Natural Gas Price Pressure Back in Full Force",
+            "source": "Natural Gas Intel",
+            "url": "https://naturalgasintel.com/news/natural-gas-price-pressure-back-in-full-force/",
+            "published": "2026-10-23T16:03:48+00:00",
+            "sentiment": 0.0,
+            "relevance": 13.1,
+            "topics": []
+          },
+          {
+            "title": "Kinder Morgan, Energy Transfer and Williams could benefit from cheap natural gas",
+            "source": "CNBC",
+            "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE14R0Q1cldXWmp5QldDYWVKX2h6YTUxLW54ZUNEZF9GS2ZEbTNUSGNSRnU0YjhNSTk5RV9NeG5LMEM5ZkpnVVMxeDRocF9PTTdQVzBkRl9fdHlVa1ZJd1B3Ql9Fa0dmTmZac3lmWEExMGJTTjg2QUJBQV9R?oc=5",
+            "published": "2026-10-23T18:07:34+00:00",
+            "sentiment": 0.0,
+            "relevance": 11.0,
+            "topics": []
+          },
+          {
+            "title": "Qatar deal to buy U.S. natural gas shows how Iran war has redrawn global energy markets",
+            "source": "CNBC",
+            "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPamRIUmExbTBlR1VjQ3ozejczY0VYOWY3ODBXakFJQ0tlaDJpLTZIZzlmRlIwa1B2aGpnRlZtR0NuRG43Wll4OWdGQ3NpdnNrdDhBVjFNVGVoZDB4MTdEQ1VOVWIxdkhWUmNXb2tPUnFFUjc4UXA1S3ZtYnVwQXNNWERIZDRPUjhvVUhjWWtHSUczV3pzNjA4YUFuamdnUdIBowFBVV95cUxNWDM1VFpwZENtdXF0aGF6ejZ2MWI5Y2w4dmtUUlpIR2NobjZHOHczaWVER1BRbmlVTUkyejc4eUtyMTVvUC1QV05CbklTOGFnZ3gtN2NiSnZwMjlPSF9KNFE2T29zZExxUjdzeGFicGhhLUtmQWJMZzhPY1lGVW1Qb3JMYlVqa2dqa2QtNmU4T21udjBNakhhNVRTbGdBZ2tlUVFr?oc=5",
+            "published": "2026-10-23T17:25:29+00:00",
+            "sentiment": 0.15,
+            "relevance": 11.0,
+            "topics": [
+              "Geopolitics"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "backtests": {
+    "brent": {
+      "asset_key": "brent",
+      "name": "Brent Crude Oil",
+      "horizon": 10,
+      "start": "2025-10-23",
+      "end": "2026-10-09",
+      "samples": 242,
+      "baseline_avg": 0.027592134658088865,
+      "baseline_up": 0.5702479338842975,
+      "buckets": [
+        {
+          "action": "STRONG BUY",
+          "n": 69,
+          "avg": 0.02724087873167298,
+          "med": -0.0027722102460120412,
+          "hit": 0.4782608695652174,
+          "best": 0.42301317070485256,
+          "worst": -0.1978876085415956
+        },
+        {
+          "action": "BUY",
+          "n": 52,
+          "avg": 0.039490036312764445,
+          "med": 0.030734707680353246,
+          "hit": 0.6923076923076923,
+          "best": 0.4199293156815924,
+          "worst": -0.18075284672108038
+        },
+        {
+          "action": "HOLD",
+          "n": 56,
+          "avg": 0.018061914771926528,
+          "med": 0.03338818758765105,
+          "hit": null,
+          "best": 0.24333717897251117,
+          "worst": -0.1936577329192909
+        },
+        {
+          "action": "SELL",
+          "n": 54,
+          "avg": 0.009621051290263239,
+          "med": -0.0006381926443433383,
+          "hit": 0.5185185185185185,
+          "best": 0.31965921905800676,
+          "worst": -0.2034742193904301
+        },
+        {
+          "action": "STRONG SELL",
+          "n": 11,
+          "avg": 0.11029000632783807,
+          "med": 0.06837889487531434,
+          "hit": 0.0,
+          "best": 0.23933885078783912,
+          "worst": 0.003803531298054441
+        }
+      ],
+      "directional_n": 186,
+      "directional_hit": 0.521505376344086
+    },
+    "wti": {
+      "asset_key": "wti",
+      "name": "WTI Crude Oil",
+      "horizon": 10,
+      "start": "2025-10-23",
+      "end": "2026-10-09",
+      "samples": 242,
+      "baseline_avg": 0.02668181857268263,
+      "baseline_up": 0.5826446280991735,
+      "buckets": [
+        {
+          "action": "STRONG BUY",
+          "n": 56,
+          "avg": -0.004610234237623953,
+          "med": -0.01684861216137734,
+          "hit": 0.44642857142857145,
+          "best": 0.3126491028151639,
+          "worst": -0.24825176810225003
+        },
+        {
+          "action": "BUY",
+          "n": 59,
+          "avg": 0.07647358893558925,
+          "med": 0.0489808568380119,
+          "hit": 0.7288135593220338,
+          "best": 0.47284398729800237,
+          "worst": -0.1616227479259369
+        },
+        {
+          "action": "HOLD",
+          "n": 58,
+          "avg": 0.010840725867533775,
+          "med": 0.02724448678621816,
+          "hit": null,
+          "best": 0.24626047881940805,
+          "worst": -0.21069428708739535
+        },
+        {
+          "action": "SELL",
+          "n": 63,
+          "avg": 0.021966379475191478,
+          "med": -0.0018816389338737194,
+          "hit": 0.5079365079365079,
+          "best": 0.27899556186869345,
+          "worst": -0.13931888544891646
+        },
+        {
+          "action": "STRONG SELL",
+          "n": 6,
+          "avg": 0.03176457624039153,
+          "med": 0.0316578785992494,
+          "hit": 0.0,
+          "best": 0.06018929864009692,
+          "worst": 0.008295115107110007
+        }
+      ],
+      "directional_n": 184,
+      "directional_hit": 0.5434782608695652
+    },
+    "gold": {
+      "asset_key": "gold",
+      "name": "Gold",
+      "horizon": 10,
+      "start": "2025-10-23",
+      "end": "2026-10-09",
+      "samples": 242,
+      "baseline_avg": 0.0023259607291647756,
+      "baseline_up": 0.49586776859504134,
+      "buckets": [
+        {
+          "action": "STRONG BUY",
+          "n": 73,
+          "avg": 0.013492190448202364,
+          "med": 0.01412940801549789,
+          "hit": 0.6301369863013698,
+          "best": 0.15318214107995187,
+          "worst": -0.1602602167081586
+        },
+        {
+          "action": "BUY",
+          "n": 34,
+          "avg": -0.002826476936223964,
+          "med": 0.020663776744791917,
+          "hit": 0.5882352941176471,
+          "best": 0.06509872873210765,
+          "worst": -0.14622108325701455
+        },
+        {
+          "action": "HOLD",
+          "n": 78,
+          "avg": -0.00911501425812388,
+          "med": -0.0133223322581148,
+          "hit": null,
+          "best": 0.085234028921513,
+          "worst": -0.08563550361460326
+        },
+        {
+          "action": "SELL",
+          "n": 48,
+          "avg": 0.007047080344267526,
+          "med": -0.005959849381259541,
+          "hit": 0.5416666666666666,
+          "best": 0.10683049970407099,
+          "worst": -0.07195056775205155
+        },
+        {
+          "action": "STRONG SELL",
+          "n": 9,
+          "avg": 0.005196007242171026,
+          "med": 0.007625850992309058,
+          "hit": 0.3333333333333333,
+          "best": 0.027053429863496348,
+          "worst": -0.02211929425033987
+        }
+      ],
+      "directional_n": 164,
+      "directional_hit": 0.5792682926829268
+    },
+    "silver": {
+      "asset_key": "silver",
+      "name": "Silver",
+      "horizon": 10,
+      "start": "2025-10-23",
+      "end": "2026-10-09",
+      "samples": 242,
+      "baseline_avg": 0.014147510647697214,
+      "baseline_up": 0.5,
+      "buckets": [
+        {
+          "action": "STRONG BUY",
+          "n": 58,
+          "avg": 0.07773946781961485,
+          "med": 0.136075734194546,
+          "hit": 0.7241379310344828,
+          "best": 0.4588509445925928,
+          "worst": -0.3375308371721044
+        },
+        {
+          "action": "BUY",
+          "n": 39,
+          "avg": -0.02911100328634387,
+          "med": -0.04124157893371494,
+          "hit": 0.28205128205128205,
+          "best": 0.196321720027681,
+          "worst": -0.2007676971410539
+        },
+        {
+          "action": "HOLD",
+          "n": 86,
+          "avg": 0.0025714306018877796,
+          "med": -0.0061954361055410745,
+          "hit": null,
+          "best": 0.24199024975982586,
+          "worst": -0.15546300275513492
+        },
+        {
+          "action": "SELL",
+          "n": 41,
+          "avg": -0.01427075907052517,
+          "med": -0.0413529015079005,
+          "hit": 0.6097560975609756,
+          "best": 0.12893182505855427,
+          "worst": -0.1511289415116428
+        },
+        {
+          "action": "STRONG SELL",
+          "n": 18,
+          "avg": 0.0230053145278699,
+          "med": 0.014884208764477158,
+          "hit": 0.3333333333333333,
+          "best": 0.1466003504120974,
+          "worst": -0.07593627028258243
+        }
+      ],
+      "directional_n": 156,
+      "directional_hit": 0.5384615384615384
+    },
+    "gas": {
+      "asset_key": "gas",
+      "name": "Natural Gas",
+      "horizon": 10,
+      "start": "2025-10-23",
+      "end": "2026-10-09",
+      "samples": 242,
+      "baseline_avg": 0.006502917698501501,
+      "baseline_up": 0.5082644628099173,
+      "buckets": [
+        {
+          "action": "STRONG BUY",
+          "n": 54,
+          "avg": 0.062260643839327584,
+          "med": 0.021583569888542042,
+          "hit": 0.5740740740740741,
+          "best": 1.1457874354985185,
+          "worst": -0.0997575678696
+        },
+        {
+          "action": "BUY",
+          "n": 38,
+          "avg": 0.07256864097702014,
+          "med": 0.01616234343872358,
+          "hit": 0.5526315789473685,
+          "best": 1.1819246077058922,
+          "worst": -0.11703903370756863
+        },
+        {
+          "action": "HOLD",
+          "n": 73,
+          "avg": -0.010874749626556116,
+          "med": 0.002770047427795408,
+          "hit": null,
+          "best": 0.1469972038263183,
+          "worst": -0.21450151637702186
+        },
+        {
+          "action": "SELL",
+          "n": 44,
+          "avg": -0.023893258579970756,
+          "med": -0.03358367011700231,
+          "hit": 0.6136363636363636,
+          "best": 0.3647234732960858,
+          "worst": -0.3044598592909805
+        },
+        {
+          "action": "STRONG SELL",
+          "n": 33,
+          "avg": -0.08184293761078126,
+          "med": 0.005515132453013161,
+          "hit": 0.45454545454545453,
+          "best": 0.1821636257018,
+          "worst": -0.576541567863579
+        }
+      ],
+      "directional_n": 169,
+      "directional_hit": 0.5562130177514792
+    }
+  },
+  "warnings": []
+}
