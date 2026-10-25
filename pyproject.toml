@@ -17,3 +17,6 @@ commodity-agent = "commodity_agent.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["commodity_agent*"]
+
+[tool.vercel]
+entrypoint = "api.run:handler"
