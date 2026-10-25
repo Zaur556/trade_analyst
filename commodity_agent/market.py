@@ -31,6 +31,9 @@ class Series:
     stale: bool = False
     source: str = "Yahoo Finance"
     warnings: list[str] = field(default_factory=list)
+    # Latest quote supplied by Yahoo metadata; daily bars remain the model history.
+    current_price: float | None = None
+    quote_time: datetime | None = None
 
     @property
     def last(self) -> Bar:
@@ -101,12 +104,24 @@ def parse_chart(payload: bytes | str, symbol: str) -> Series:
         raise ValueError(f"Only {len(bars)} usable bars for {symbol}")
 
     name = meta.get("shortName") or meta.get("longName") or symbol
+    market_price = _f(meta.get("regularMarketPrice"))
+    if market_price is None or market_price <= 0:
+        market_price = bars[-1].close
+    market_ts = _f(meta.get("regularMarketTime"))
+    quote_time = (
+        datetime.fromtimestamp(int(market_ts), tz=timezone.utc)
+        if market_ts is not None and market_ts > 0
+        else None
+    )
+
     return Series(
         symbol=symbol,
         name=str(name),
         bars=bars,
         currency=str(meta.get("currency") or "USD"),
         exchange=str(meta.get("fullExchangeName") or meta.get("exchangeName") or ""),
+        current_price=market_price,
+        quote_time=quote_time,
     )
 
 
@@ -133,7 +148,8 @@ def daily_change(series: Series) -> tuple[float, float]:
     prev = series.prev
     if prev is None or prev.close == 0:
         return 0.0, 0.0
-    delta = series.last.close - prev.close
+    latest = series.current_price if series.current_price is not None else series.last.close
+    delta = latest - prev.close
     return delta, delta / prev.close * 100.0
 
 
