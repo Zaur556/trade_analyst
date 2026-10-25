@@ -300,6 +300,7 @@ def analyze(
     conf_label = "High" if confidence >= 70 else "Medium" if confidence >= 45 else "Low"
 
     delta, delta_pct = daily_change(series)
+    display_price = series.current_price if series.current_price is not None else close
     plan = _plan(asset, ind, i, composite, account_size, risk_pct)
 
     metrics = _metrics(ind, i, series, delta_pct)
@@ -312,7 +313,7 @@ def analyze(
     return Signal(
         asset=asset,
         series=series,
-        price=close,
+        price=display_price,
         change=delta,
         change_pct=delta_pct,
         score=composite,
