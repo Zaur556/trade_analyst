@@ -249,6 +249,8 @@ so Hobby needs a free external scheduler (cron-job.org) calling the function eve
 Full setup: **[VERCEL.md](VERCEL.md)**. The code is included but **not deployed automatically** —
 you need to add the Vercel project, Upstash database and environment variables.
 
+For this Vercel Hobby project, the included GitHub Actions workflow `.github/workflows/two-hour-refresh.yml` can call the production endpoint every two hours and send a full email snapshot. Add a repository Actions secret named `CRON_SECRET` matching the Vercel Production secret; see [VERCEL.md](VERCEL.md). The scheduled digest is in addition to the existing change-only alert mode.
+
 When Vercel is live, stop the local `pythonw` watcher and remove the Startup shortcut:
 the two deployments have separate alert-state stores, so running both would send duplicate
 emails.
