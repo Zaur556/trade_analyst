@@ -1,18 +1,16 @@
-# Vercel deployment — email only
+# Vercel deployment — hosted dashboard and email alerts
 
-This runs the same agent on Vercel, so it keeps checking every 5 minutes and emailing you
-when a signal changes even when your laptop is off. There is no dashboard in this deployment;
-the deliverable is the email.
+The hosted dashboard is served from the production root. The protected `/api/run` endpoint refreshes commodity analysis; GitHub Actions schedules a full email digest every two hours while your laptop is off.
 
 ```
-Vercel Cron / external scheduler
+GitHub Actions (every two hours, UTC)
         |
         v
-GET /api/run  (Python function)
+GET /api/run?digest=1  (protected Python function)
         |
         +--> Yahoo Finance + RSS/Google News
         +--> Upstash Redis  (persistent alert state)
-        +--> Gmail SMTP     (change-only email)
+        +--> Gmail SMTP     (scheduled digest + material changes)
 ```
 
 Vercel functions are ephemeral and have a read-only filesystem, so the alert baseline lives in
@@ -26,11 +24,7 @@ invocation.
 - A Vercel project containing this directory.
 - An Upstash Redis database (free tier is plenty: roughly 600 commands/day).
 - The Gmail App Password you already created.
-- **5-minute scheduling**:
-  - **Vercel Pro**: native cron supports every 5 minutes.
-  - **Vercel Hobby**: native cron is **once per day** (max 2 jobs). Use an external scheduler
-    such as cron-job.org to call the function every 5 minutes. The function itself runs on
-    Vercel either way.
+- **Scheduled email digest**: this repository includes a GitHub Actions workflow for every-two-hour updates. On Vercel Hobby, use the workflow rather than native Vercel Cron, which is limited to once daily.
 
 Vercel's Hobby cron limit is documented here:
 <https://vercel.com/docs/cron-jobs/usage-and-pricing>
@@ -226,10 +220,8 @@ the Authorization header is preferred because query strings can appear in logs.
 
 ## Notes
 
-- **No HTML dashboard is hosted.** Email contains the change, current book and plans.
-- **Email is change-only, not every 5 minutes.** The 5-minute schedule is the check
-  cadence. If you also want a daily snapshot regardless of changes, add a second daily job
-  that calls a digest variant; that is not included yet.
+- **The dashboard is hosted** at the production root URL. The email includes the current book and plans.
+- **Scheduled digest mode emails every two hours** even when no material signal changed. The ordinary `/api/run` call without `digest=1` remains change-only.
 - **Turn off the local watcher when Vercel is live.** The laptop and Vercel use separate
   alert-state stores, so running both will produce duplicate emails. Stop the `pythonw`
   watcher and remove the Startup shortcut once the Vercel job is working.
