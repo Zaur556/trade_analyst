@@ -115,7 +115,7 @@ class TestChangeDetection(unittest.TestCase):
             self.assertEqual(first.status, "sent")
             self.assertEqual(len(sent), 1)
             self.assertIn("2-hour market update", sent[0][1])
-            self.assertIn("CURRENT BOOK", sent[0][2])
+            self.assertIn("CURRENT BOOK", sent[0][1])
 
             before = (out_dir / "alert_state.json").read_text(encoding="utf-8")
             second = process_alerts(
@@ -146,7 +146,7 @@ class TestChangeDetection(unittest.TestCase):
             self.assertEqual(result.status, "sent")
             self.assertEqual(len(sent), 2)
             self.assertIn("1 material change", sent[1][1])
-            self.assertIn("Gold: BUY -> HOLD", sent[1][2])
+            self.assertIn("Gold: BUY -> HOLD", sent[1][1])
 
     def test_stop_crossing_detected(self):
         with tempfile.TemporaryDirectory() as tmp:
