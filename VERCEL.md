@@ -143,7 +143,20 @@ stop/target/trigger.
 
 ---
 
-## 5. Schedule every 5 minutes
+## 5. Schedule every two hours and email a full snapshot
+
+The GitHub Actions workflow at `.github/workflows/two-hour-refresh.yml` calls the production API every two hours (UTC) with `digest=1`. Each successful run emails the current five-instrument book and any material changes. Unlike normal change-only mode, a scheduled digest is sent even if no signal changed.
+
+This project is on Vercel Hobby, so do **not** add a Vercel Cron expression that runs more than once per day. Hobby deployments reject more frequent cron jobs. GitHub Actions is used as the external scheduler instead.
+
+One-time setup:
+
+1. Open the GitHub repository **Settings → Secrets and variables → Actions → New repository secret**.
+2. Name it `CRON_SECRET` and set its value to the same secret as the Vercel project's **Production** `CRON_SECRET` environment variable. Do not paste the secret into source code or a chat.
+3. Go to **Actions → Commodity Signal Desk — two-hour refresh**. Enable workflows if GitHub prompts you.
+4. Use **Run workflow** for a one-off first run; it sends a real digest email. Otherwise, the schedule begins at the next even UTC hour.
+
+The workflow uses the protected production API and does not expose the secret. GitHub scheduled workflows can sometimes start late, so this is approximately every two hours rather than a guaranteed exact-time service.
 
 ### Option A — Vercel Pro (native, recommended)
 
