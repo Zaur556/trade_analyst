@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/run.py": {
+      "maxDuration": 60,
+      "includeFiles": "commodity_agent/**"
+    }
+  }
+}
