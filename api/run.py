@@ -239,8 +239,7 @@ def run_job(
         account_size=_env_float("ACCOUNT_SIZE", 50_000.0),
         risk_pct=_env_float("RISK_PCT", 1.0),
         no_backtest=True,
-        # Refresh market quotes at most once per minute; daily history remains cached
-        # independently by the market-data layer's URL/TTL cache.
+        # Refresh market and macro data at most once per minute.
         market_ttl=60,
         news_ttl=600,
     )
