@@ -173,6 +173,14 @@ def _signal_payload(result) -> list[dict]:
                 "unit": signal.asset.unit,
                 "price": round(signal.price, 4),
                 "change_pct": round(signal.change_pct, 3),
+                "quote_time": (
+                    signal.series.quote_time.isoformat()
+                    if signal.series.quote_time is not None
+                    else None
+                ),
+                "quote_source": signal.series.source,
+                "quote_stale": bool(signal.series.stale),
+                "quote_note": "Yahoo Finance quotes may be delayed; verify against your broker before trading.",
                 "score": round(signal.score, 1),
                 "action": signal.action,
                 "confidence": round(signal.confidence, 1),
@@ -231,7 +239,9 @@ def run_job(
         account_size=_env_float("ACCOUNT_SIZE", 50_000.0),
         risk_pct=_env_float("RISK_PCT", 1.0),
         no_backtest=True,
-        market_ttl=240,
+        # Refresh market quotes at most once per minute; daily history remains cached
+        # independently by the market-data layer's URL/TTL cache.
+        market_ttl=60,
         news_ttl=600,
     )
 
