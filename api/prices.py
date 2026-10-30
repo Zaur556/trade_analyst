@@ -1,7 +1,7 @@
 """Public, read-only diagnostics for the Lighter commodity price feed.
 
-This route exposes only market prices already public on Lighter. It requires no
-CRON_SECRET and never exposes account, trading, or alert credentials.
+This route exposes only public market prices and requires the same CRON_SECRET
+as the dashboard analysis API. It never exposes account or trading credentials.
 """
 from __future__ import annotations
 
