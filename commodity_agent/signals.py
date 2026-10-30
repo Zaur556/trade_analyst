@@ -301,7 +301,7 @@ def analyze(
 
     delta, delta_pct = daily_change(series)
     display_price = series.current_price if series.current_price is not None else close
-    plan = _plan(asset, ind, i, composite, account_size, risk_pct)
+    plan = _plan(asset, ind, i, composite, account_size, risk_pct, current_price=display_price)
 
     metrics = _metrics(ind, i, series, delta_pct)
     drivers = [
@@ -331,9 +331,11 @@ def analyze(
 
 
 def _plan(
-    asset: Asset, ind: dict, i: int, score: float, account_size: float, risk_pct: float
+    asset: Asset, ind: dict, i: int, score: float, account_size: float, risk_pct: float,
+    current_price: float | None = None,
 ) -> TradePlan:
     close = ind["close"][i]
+    entry = current_price if current_price is not None and current_price > 0 else close
     atr = ind["atr"][i] or close * 0.02
     highs, lows = ind["high"], ind["low"]
     swing_high = max(highs[max(0, i - 9) : i + 1])
@@ -344,20 +346,20 @@ def _plan(
 
     if score >= 20:
         direction = "LONG"
-        raw_stop = min(close - 1.6 * atr, swing_low - 0.25 * atr)
-        stop = max(raw_stop, close - 2.2 * atr)
-        stop = min(stop, close - 0.9 * atr)
-        stop_dist = close - stop
-        target = close + 4.0 * atr
-        rr = (target - close) / stop_dist if stop_dist > 0 else None
+        raw_stop = min(entry - 1.6 * atr, swing_low - 0.25 * atr)
+        stop = max(raw_stop, entry - 2.2 * atr)
+        stop = min(stop, entry - 0.9 * atr)
+        stop_dist = entry - stop
+        target = entry + 4.0 * atr
+        rr = (target - entry) / stop_dist if stop_dist > 0 else None
     elif score <= -20:
         direction = "SHORT"
-        raw_stop = max(close + 1.6 * atr, swing_high + 0.25 * atr)
-        stop = min(raw_stop, close + 2.2 * atr)
-        stop = max(stop, close + 0.9 * atr)
-        stop_dist = stop - close
-        target = close - 4.0 * atr
-        rr = (close - target) / stop_dist if stop_dist > 0 else None
+        raw_stop = max(entry + 1.6 * atr, swing_high + 0.25 * atr)
+        stop = min(raw_stop, entry + 2.2 * atr)
+        stop = max(stop, entry + 0.9 * atr)
+        stop_dist = stop - entry
+        target = entry - 4.0 * atr
+        rr = (entry - target) / stop_dist if stop_dist > 0 else None
     else:
         return TradePlan(
             direction="FLAT", entry=None, stop=None, target=None, stop_distance=None,
@@ -369,13 +371,13 @@ def _plan(
     risk_per_contract = stop_dist * asset.multiplier
     budget = max(0.0, account_size * max(0.01, risk_pct) / 100.0)
     contracts = int(budget // risk_per_contract) if risk_per_contract > 0 else 0
-    notional = close * asset.multiplier
+    notional = entry * asset.multiplier
     min_account = risk_per_contract / (max(0.01, risk_pct) / 100.0)
-    stop_pct = stop_dist / close if close else 0.0
+    stop_pct = stop_dist / entry if entry else 0.0
     etf_notional = (budget / stop_pct) if stop_pct > 0 else None
     return TradePlan(
         direction=direction,
-        entry=close,
+        entry=entry,
         stop=stop,
         target=target,
         stop_distance=stop_dist,

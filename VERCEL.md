@@ -8,7 +8,7 @@ GitHub Actions (every two hours, UTC)
         v
 GET /api/run?digest=1  (protected Python function)
         |
-        +--> Yahoo Finance + RSS/Google News
+        +--> Lighter public commodity quotes + Yahoo Finance historical candles + RSS/Google News
         +--> Upstash Redis  (persistent alert state)
         +--> Gmail SMTP     (scheduled digest + material changes)
 ```
@@ -72,6 +72,8 @@ Project → **Settings** → **Environment Variables** (Production):
 | `NEWS_DAYS` | Optional, default `4` |
 | `ACCOUNT_SIZE` | Optional, default `50000` |
 | `RISK_PCT` | Optional, default `1.0` |
+| `LIGHTER_QUOTES_ENABLED` | Optional, default `1`; set `0` to disable Lighter quotes |
+| `LIGHTER_API_BASE_URL` | Optional; defaults to `https://mainnet.zklighter.elliot.ai` |
 
 Generate a secret without PowerShell, for example in the Vercel dashboard or with any password
 manager. Do not commit `gmail.env`; `.vercelignore` already excludes it.

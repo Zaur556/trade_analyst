@@ -180,7 +180,7 @@ def _signal_payload(result) -> list[dict]:
                 ),
                 "quote_source": signal.series.source,
                 "quote_stale": bool(signal.series.stale),
-                "quote_note": "Yahoo Finance quotes may be delayed; verify against your broker before trading.",
+                "quote_note": ("Lighter commodity-market quote; Yahoo Finance supplies historical futures candles. This may differ from exchange-traded futures. Verify against your broker before trading." if signal.series.source.startswith("Lighter") else "Yahoo Finance quote may be delayed; verify against your broker before trading."),
                 "score": round(signal.score, 1),
                 "action": signal.action,
                 "confidence": round(signal.confidence, 1),
