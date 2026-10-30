@@ -51,12 +51,15 @@ def parse_quotes(payload: bytes | str | dict[str, Any] | list[Any], fetched_at: 
         candidates = []
         for row in rows:
             symbol = _symbol(row)
-            if not any(symbol == alias or symbol.startswith(alias + "USD") for alias in aliases):
+            if not any(symbol == alias or symbol.startswith(alias + suffix) for alias in aliases for suffix in ("", "USD", "USDC", "PERP")):
+                continue
+            status = str(row.get("status") or "").strip().lower()
+            if status and status not in ("active", "1", "true"):
                 continue
             price, price_type = None, ""
             for field, label in (("index_price", "index"), ("oracle_price", "oracle"),
                                  ("mark_price", "mark"), ("last_trade_price", "last trade"),
-                                 ("price", "market")):
+                                 ("last_price", "last trade"), ("price", "market")):
                 price = _number(row.get(field))
                 if price is not None:
                     price_type = label
@@ -73,7 +76,7 @@ def fetch_quotes(*, ttl: int = 60, refresh: bool = False, offline: bool = False)
     result = net.fetch(base_url + "/api/v1/orderBookDetails", ttl=ttl, timeout=12,
                        retries=1, refresh=refresh, offline=offline)
     quotes = parse_quotes(result.body, datetime.fromtimestamp(result.fetched_at, tz=timezone.utc))
-    if not quotes: raise ValueError("Lighter orderBookDetails returned no recognized commodity prices")
+    if not quotes: raise ValueError("Lighter orderBookDetails returned no recognized active commodity prices")
     if result.stale:
         quotes = {key: LighterQuote(q.asset_key, q.market_symbol, q.price, q.price_type, q.fetched_at, True)
                   for key, q in quotes.items()}
