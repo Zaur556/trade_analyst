@@ -53,6 +53,17 @@ class TestAnalysis(unittest.TestCase):
         labels = {f.key: f.label for f in signal.factors}
         self.assertIn("faded", labels["trend"].lower())
 
+    def test_live_quote_is_used_for_entry_and_trade_plan(self):
+        series = make_series(trend())
+        series.current_price = series.last.close * 1.01
+        signal = analyze(ASSETS["gold"], series, None, None)
+        self.assertAlmostEqual(signal.price, series.current_price)
+        self.assertAlmostEqual(signal.plan.entry, series.current_price)
+        if signal.plan.direction == "LONG":
+            self.assertAlmostEqual(signal.plan.rr, (signal.plan.target - signal.plan.entry) / signal.plan.stop_distance)
+        elif signal.plan.direction == "SHORT":
+            self.assertAlmostEqual(signal.plan.rr, (signal.plan.entry - signal.plan.target) / signal.plan.stop_distance)
+
     def test_position_sizing_respects_budget(self):
         series = make_series(trend())
         signal = analyze(ASSETS["brent"], series, None, None, account_size=10_000_000, risk_pct=1.0)
