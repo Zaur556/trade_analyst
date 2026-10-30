@@ -22,6 +22,15 @@ class TestLighterQuotes(unittest.TestCase):
         self.assertEqual(quotes["gold"].price,2750)
         self.assertEqual(quotes["silver"].price,32)
 
+    def test_ignores_inactive_market_and_accepts_last_price_fallback(self):
+        quotes = parse_quotes({"order_book_details": [
+            {"symbol": "XAU", "status": "inactive", "index_price": "2700"},
+            {"symbol": "XAG", "status": "active", "last_price": "31.5"},
+        ]})
+        self.assertNotIn("gold", quotes)
+        self.assertEqual(quotes["silver"].price, 31.5)
+        self.assertEqual(quotes["silver"].price_type, "last trade")
+
     def test_ignores_nonpositive_and_unknown_prices(self):
         quotes=parse_quotes({"order_book_details":[{"symbol":"XAU","index_price":"0","mark_price":"-1"},{"symbol":"BTC","index_price":"65000"}]})
         self.assertEqual(quotes,{})
