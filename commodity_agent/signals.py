@@ -351,7 +351,7 @@ def _plan(
         stop = min(stop, entry - 0.9 * atr)
         stop_dist = entry - stop
         target = entry + 4.0 * atr
-        rr = (target - close) / stop_dist if stop_dist > 0 else None
+        rr = (target - entry) / stop_dist if stop_dist > 0 else None
     elif score <= -20:
         direction = "SHORT"
         raw_stop = max(entry + 1.6 * atr, swing_high + 0.25 * atr)
@@ -359,7 +359,7 @@ def _plan(
         stop = max(stop, entry + 0.9 * atr)
         stop_dist = stop - entry
         target = entry - 4.0 * atr
-        rr = (close - target) / stop_dist if stop_dist > 0 else None
+        rr = (entry - target) / stop_dist if stop_dist > 0 else None
     else:
         return TradePlan(
             direction="FLAT", entry=None, stop=None, target=None, stop_distance=None,
