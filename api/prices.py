@@ -5,6 +5,7 @@ CRON_SECRET and never exposes account, trading, or alert credentials.
 """
 from __future__ import annotations
 
+import hmac
 import json
 import os
 import tempfile
@@ -55,6 +56,11 @@ def _price_check(key: str, quote) -> dict:
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:  # noqa: N802 - Vercel Python function API
+        secret = os.environ.get("CRON_SECRET", "").strip()
+        supplied = self.headers.get("Authorization", "")
+        if not secret or not hmac.compare_digest(supplied, f"Bearer {secret}"):
+            self._send(401 if secret else 503, {"ok": False, "error": "Unauthorized." if secret else "CRON_SECRET is not configured."})
+            return
         try:
             quotes = fetch_quotes(ttl=0, refresh=True)
             markets = [_price_check(key, quotes[key]) for key in ORDER if key in quotes]
@@ -82,6 +88,9 @@ class handler(BaseHTTPRequestHandler):
             }
             status = 502
 
+        self._send(status, payload)
+
+    def _send(self, status: int, payload: dict) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
