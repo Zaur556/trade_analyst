@@ -3,6 +3,10 @@
     "api/run.py": {
       "maxDuration": 60,
       "includeFiles": "commodity_agent/**"
+    },
+    "api/prices.py": {
+      "maxDuration": 30,
+      "includeFiles": "commodity_agent/**"
     }
   }
 }
