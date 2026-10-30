@@ -10,6 +10,7 @@ from pathlib import Path
 from .backtest import Backtest, run_backtest
 from .config import ASSETS, ORDER
 from .macro import MacroContext, fetch_macro
+from .lighter import fetch_quotes as fetch_lighter_quotes
 from .market import Series, fetch_series
 from .news import Article, aggregate, fetch_news
 from .signals import Signal, analyze
@@ -56,6 +57,14 @@ def run(
 ) -> RunResult:
     keys = asset_keys or list(ORDER)
     warnings: list[str] = []
+    lighter_quotes = {}
+    import os
+    lighter_enabled = os.environ.get("LIGHTER_QUOTES_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off")
+    if lighter_enabled:
+        try:
+            lighter_quotes = fetch_lighter_quotes(ttl=market_ttl, refresh=refresh, offline=offline)
+        except Exception as exc:  # noqa: BLE001 - Yahoo remains the fallback
+            warnings.append(f"Lighter live quotes unavailable; using Yahoo Finance quotes ({str(exc)[:100]})")
 
     def load(key: str) -> Series:
         return fetch_series(
@@ -71,6 +80,24 @@ def run(
                 warnings.extend(series_map[key].warnings)
             except Exception as exc:  # noqa: BLE001
                 warnings.append(f"{ASSETS[key].name}: market data failed ({str(exc)[:120]})")
+
+    for key, series in series_map.items():
+        quote = lighter_quotes.get(key)
+        if quote is None:
+            continue
+        yahoo_price = series.current_price if series.current_price is not None else series.last.close
+        tolerance = 0.35 if key == "gas" else 0.20
+        if yahoo_price <= 0 or abs(quote.price / yahoo_price - 1.0) > tolerance:
+            warnings.append(f"{series.name}: Lighter {quote.price_type} price rejected as an outlier; using Yahoo Finance quote.")
+            continue
+        series.current_price = quote.price
+        series.source = f"Lighter {quote.price_type}"
+        series.quote_time = quote.fetched_at
+        series.stale = series.stale or quote.stale
+        if quote.stale:
+            warning = f"{series.name}: using cached Lighter quote"
+            series.warnings.append(warning)
+            warnings.append(warning)
 
     if not series_map:
         raise RuntimeError("No market data could be loaded. Check the network or run with --offline after a cached fetch.")
