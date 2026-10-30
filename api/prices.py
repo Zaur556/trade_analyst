@@ -6,8 +6,14 @@ CRON_SECRET and never exposes account, trading, or alert credentials.
 from __future__ import annotations
 
 import json
+import os
+import tempfile
+from pathlib import Path
 from http.server import BaseHTTPRequestHandler
 from datetime import timezone
+
+HOME = Path(os.environ.get("COMMODITY_AGENT_HOME") or (Path(tempfile.gettempdir()) / "commodity-agent"))
+os.environ.setdefault("COMMODITY_AGENT_HOME", str(HOME))
 
 from commodity_agent.config import ASSETS, ORDER
 from commodity_agent.lighter import MARKETS, fetch_quotes
