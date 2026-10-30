@@ -84,6 +84,8 @@ def run(
     for key, series in series_map.items():
         quote = lighter_quotes.get(key)
         if quote is None:
+            if lighter_enabled:
+                warnings.append(f"{series.name}: no matching active Lighter market quote; using Yahoo Finance.")
             continue
         yahoo_price = series.current_price if series.current_price is not None else series.last.close
         tolerance = 0.35 if key == "gas" else 0.20
